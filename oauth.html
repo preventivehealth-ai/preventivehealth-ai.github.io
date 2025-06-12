@@ -1,0 +1,18 @@
+<!-- auth-redirect.html -->
+<!DOCTYPE html>
+<html>
+  <head><title>Logging you in...</title></head>
+  <body>
+    <script>
+      // Optional: Handle tokens from the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get("token");
+      if (token) {
+        localStorage.setItem("memberfulToken", token);
+      }
+      // Redirect back to Framer site
+      window.top.location.href = "https://memorable-flow-517112.framer.app/community";
+    </script>
+    <p>Redirecting...</p>
+  </body>
+</html>
