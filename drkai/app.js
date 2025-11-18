@@ -597,6 +597,17 @@ function init() {
     }
   });
 
+  // Reset buttons
+  const resetBoxesBtn = document.getElementById('reset-boxes-btn');
+  const resetUrlsBtn = document.getElementById('reset-urls-btn');
+  const resetVisibilityBtn = document.getElementById('reset-visibility-btn');
+  const resetAllBtn = document.getElementById('reset-all-btn');
+
+  if (resetBoxesBtn) resetBoxesBtn.addEventListener('click', resetBoxes);
+  if (resetUrlsBtn) resetUrlsBtn.addEventListener('click', resetURLs);
+  if (resetVisibilityBtn) resetVisibilityBtn.addEventListener('click', resetVisibility);
+  if (resetAllBtn) resetAllBtn.addEventListener('click', resetAll);
+
   // Close tile menus when clicking outside
   document.addEventListener('click', function(e) {
     if (!e.target.closest('.tile-actions')) {
@@ -616,6 +627,59 @@ function init() {
       window.open(a.href, '_blank', 'noopener');
     }
   });
+}
+
+// ======================================
+// Reset Functions
+// ======================================
+
+function resetBoxes() {
+  if (!confirm('Are you sure you want to reset all boxes to defaults? This will delete any custom boxes you\'ve created.')) {
+    return;
+  }
+
+  state.boxes = JSON.parse(JSON.stringify(DEFAULT_BOXES));
+  saveState();
+  window.location.reload();
+}
+
+function resetURLs() {
+  if (!confirm('Are you sure you want to reset all environment URLs to defaults?')) {
+    return;
+  }
+
+  state.envs = { ...DEFAULT_ENVS };
+  saveEnvs();
+  window.location.reload();
+}
+
+function resetVisibility() {
+  if (!confirm('Are you sure you want to reset environment filter visibility to defaults?')) {
+    return;
+  }
+
+  state.visibleEnvs = { prod: true, dev: true, local: false };
+  saveVisibleEnvs();
+  window.location.reload();
+}
+
+function resetAll() {
+  if (!confirm('Are you sure you want to reset EVERYTHING to defaults? This will delete all your custom boxes, URLs, and settings. This cannot be undone!')) {
+    return;
+  }
+
+  // Reset all state
+  state.boxes = JSON.parse(JSON.stringify(DEFAULT_BOXES));
+  state.envs = { ...DEFAULT_ENVS };
+  state.visibleEnvs = { prod: true, dev: true, local: false };
+
+  // Save all to localStorage
+  saveState();
+  saveEnvs();
+  saveVisibleEnvs();
+
+  // Reload page to show reset state
+  window.location.reload();
 }
 
 // Start the app when DOM is ready
