@@ -62,7 +62,7 @@ p {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: var(--radius);
   padding: 24px;
-  margin-bottom: 24px;
+  margin: 40px 0 24px 0;
   color: white;
 }
 
@@ -780,4 +780,43 @@ small {
 
 .hidden {
   display: none !important;
+}
+
+/* Reset Controls */
+.reset-controls {
+  margin-top: 16px;
+}
+
+.reset-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.reset-btn {
+  padding: 8px 16px;
+  border: 1px solid #d1d5db;
+  background: white;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #374151;
+}
+
+.reset-btn:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.reset-btn.reset-all {
+  background: #dc2626;
+  color: white;
+  border-color: #dc2626;
+}
+
+.reset-btn.reset-all:hover {
+  background: #b91c1c;
+  border-color: #b91c1c;
 }

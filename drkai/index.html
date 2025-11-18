@@ -26,13 +26,6 @@
     <p class="page-subtitle">Session Management Dashboard</p>
   </div>
 
-  <!-- Overview -->
-  <div class="overview">
-    <h2>How does this work?</h2>
-    <p>This tool uses Firefox "containers" to keep different user sessions completely separate. Each box below opens DoctorKai in its own isolated container - allowing you to be logged in as multiple users simultaneously (e.g., admin and coordinator) without logging in and out. You'll need to log in manually after clicking each box for the first time.</p>
-    <p><strong>Note:</strong> Your boxes are stored locally in your browser. Don't clear your browser's local storage/site data.</p>
-  </div>
-
   <!-- Collapsible Setup Instructions -->
   <div class="instructions">
     <div class="instructions-header" id="instructions-header">
@@ -95,16 +88,25 @@
   <!-- Boxes Container (dynamically rendered) -->
   <div id="boxes-container"></div>
 
-  <!-- Environment Configuration -->
+  <!-- Overview -->
+  <div class="overview">
+    <h2>How does this work?</h2>
+    <p>Each box above opens DoctorKai in its own separate container. Think of each container like having a completely separate browser - each one keeps its own login session independent from the others. This lets you stay logged in as different users at the same time (like admin and coordinator) without constantly logging in and out.</p>
+    <p><strong>Note:</strong> Your custom boxes are saved in your browser's storage. Don't clear your browser data or you'll lose your setup.</p>
+  </div>
+
+  <!-- Developer Settings -->
   <div class="env-config">
     <div class="env-config-header" id="env-config-header">
-      <h3>🌐 Environment URLs</h3>
+      <h3>⚙️ Developer Settings</h3>
       <span class="env-config-toggle" id="env-config-toggle">▼</span>
     </div>
     <div class="env-config-content" id="env-config-content">
       <div class="env-config-disclaimer">
-        <strong>⚠️ Warning:</strong> Only modify these URLs if you know what you're doing and it's necessary for your specific setup. The default URLs work for most users.
+        <strong>⚠️ Warning:</strong> Only modify these settings if you know what you're doing and it's necessary for your specific setup. The default settings work for most users.
       </div>
+
+      <h4 style="margin: 24px 0 12px 0; font-size: 16px;">Environment URLs</h4>
       <div class="env-config-grid">
         <div class="env-config-item">
           <label for="env-local">Localhost:</label>
@@ -113,13 +115,24 @@
         </div>
         <div class="env-config-item">
           <label for="env-dev">Dev:</label>
-          <input type="text" id="env-dev" placeholder="https://prod.preventivehealth.ai/drkai" />
+          <input type="text" id="env-dev" placeholder="https://app-dev.preventivehealth.ai/drkai" />
           <button>Save</button>
         </div>
         <div class="env-config-item">
           <label for="env-prod">Prod:</label>
-          <input type="text" id="env-prod" placeholder="https://kaiprod.preventivehealth.ai/drkai" />
+          <input type="text" id="env-prod" placeholder="https://app.preventivehealth.ai/drkai" />
           <button>Save</button>
+        </div>
+      </div>
+
+      <h4 style="margin: 24px 0 12px 0; font-size: 16px;">Reset to Defaults</h4>
+      <div class="reset-controls">
+        <p style="margin: 0 0 12px 0; color: #6b7280; font-size: 14px;">Reset your configuration back to default values. This cannot be undone.</p>
+        <div class="reset-buttons">
+          <button class="reset-btn" id="reset-boxes-btn">Reset Boxes</button>
+          <button class="reset-btn" id="reset-urls-btn">Reset URLs</button>
+          <button class="reset-btn" id="reset-visibility-btn">Reset Filters</button>
+          <button class="reset-btn reset-all" id="reset-all-btn">Reset Everything</button>
         </div>
       </div>
     </div>
