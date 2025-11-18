@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>DoctorKai Dashboard Session Management</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- Setup Notice (shown when not on Firefox) -->
+<div id="setup-notice" class="setup-notice hidden">
+  <h2>⚠️ Firefox Required</h2>
+  <p>This page requires Mozilla Firefox with specific extensions to work properly. Please complete the setup below, then open this page in Firefox.</p>
+
+  <ol>
+    <li>Download and install <a href="https://www.mozilla.org/firefox/" target="_blank">Mozilla Firefox</a></li>
+    <li>Once setup is complete, open this page in Firefox to use the container manager</li>
+  </ol>
+</div>
+
+<!-- Main Content (shown when on Firefox) -->
+<div id="main-content" class="container">
+  <div class="page-header">
+    <h1>DoctorKai</h1>
+    <p class="page-subtitle">Session Management Dashboard</p>
+  </div>
+
+  <!-- Overview -->
+  <div class="overview">
+    <h2>How does this work?</h2>
+    <p>This tool uses Firefox "containers" to keep different user sessions completely separate. Each box below opens DoctorKai in its own isolated container - allowing you to be logged in as multiple users simultaneously (e.g., admin and coordinator) without logging in and out. You'll need to log in manually after clicking each box for the first time.</p>
+    <p><strong>Note:</strong> Your boxes are stored locally in your browser. Don't clear your browser's local storage/site data.</p>
+  </div>
+
+  <!-- Collapsible Setup Instructions -->
+  <div class="instructions">
+    <div class="instructions-header" id="instructions-header">
+      <h3>📋 Setup Instructions</h3>
+      <span class="instructions-toggle" id="instructions-toggle">▼</span>
+    </div>
+    <div class="instructions-content" id="instructions-content">
+      <h4>1. Install Required Extensions</h4>
+      <ul>
+        <li><a href="https://addons.mozilla.org/firefox/addon/multi-account-containers/" target="_blank">Multi-Account Containers</a> - Manages isolated container tabs</li>
+        <li><a href="https://addons.mozilla.org/firefox/addon/open-url-in-container/" target="_blank">Open external links in a container</a> - Allows sessions to be opened in new tabs</li>
+      </ul>
+
+      <h4>2. Create Your Containers</h4>
+      <p>The page starts with 9 default boxes. Create matching containers in Firefox with these exact names (case-sensitive):</p>
+      <ul>
+        <li><code>Local:Admin</code>, <code>Local:Coordinator</code>, <code>Local:Doctor</code></li>
+        <li><code>Dev:Admin</code>, <code>Dev:Coordinator</code>, <code>Dev:Doctor</code></li>
+        <li><code>Prod:Admin</code>, <code>Prod:Coordinator</code>, <code>Prod:Doctor</code></li>
+      </ul>
+      <p><strong>How:</strong> In Multi-Account Containers extension, click "+" to add a container. Name it exactly as shown (e.g., <code>Local:Admin</code> with the colon), choose any color, then save. Repeat for all 9 names.</p>
+      <p><strong>Format:</strong> Use <code>Environment:Name</code> - environment must be Local, Dev, or Prod. The name can be anything you choose (e.g., Admin, ForumAdmin, DoctorPH). Just ensure the container name in Firefox matches exactly what you enter on this page.</p>
+      <p><strong>Security Note:</strong> DoctorKai may log you out after inactivity. Simply log back in when this happens.</p>
+
+      <h4>3. Create Your Custom View!</h4>
+      <p>Customize your dashboard by adding or removing boxes. Click the <span class="plus-icon">+</span> button to add new boxes, or use the ⋯ menu on any box to edit or delete it.</p>
+      <p>When adding a custom box, you'll need:</p>
+      <ul>
+        <li><strong>Environment:</strong> Choose localhost, dev, or prod</li>
+        <li><strong>Container Name:</strong> Must match a container you created in Firefox</li>
+        <li><strong>Display Name:</strong> Friendly name shown on the box</li>
+        <li><strong>Color:</strong> Visual identifier for easy recognition</li>
+      </ul>
+
+      <h4>4. Quick Access Tips</h4>
+      <p>For the best experience, make this page easy to access:</p>
+      <ul>
+        <li><strong>Bookmark this page:</strong> Press <code>Ctrl+D</code> (Windows) or <code>Cmd+D</code> (Mac) to bookmark</li>
+        <li><strong>Set as homepage:</strong> Make this your Firefox homepage for instant access
+          <div class="homepage-btn-wrapper">
+            <button class="homepage-btn" id="set-homepage-btn">Set as Homepage</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-group legend-left">
+      <span>Click ⋯ menu to edit/delete • Click <span class="plus-icon">+</span> to add new</span>
+    </div>
+    <div class="legend-group legend-right">
+      <button class="legend-badge prod active" id="filter-prod" data-env="prod">PROD</button>
+      <button class="legend-badge dev active" id="filter-dev" data-env="dev">DEV</button>
+      <button class="legend-badge local active" id="filter-local" data-env="local">LOCAL</button>
+    </div>
+  </div>
+
+  <!-- Boxes Container (dynamically rendered) -->
+  <div id="boxes-container"></div>
+
+  <!-- Environment Configuration -->
+  <div class="env-config">
+    <div class="env-config-header" id="env-config-header">
+      <h3>🌐 Environment URLs</h3>
+      <span class="env-config-toggle" id="env-config-toggle">▼</span>
+    </div>
+    <div class="env-config-content" id="env-config-content">
+      <div class="env-config-disclaimer">
+        <strong>⚠️ Warning:</strong> Only modify these URLs if you know what you're doing and it's necessary for your specific setup. The default URLs work for most users.
+      </div>
+      <div class="env-config-grid">
+        <div class="env-config-item">
+          <label for="env-local">Localhost:</label>
+          <input type="text" id="env-local" placeholder="http://localhost:3000/path" />
+          <button>Save</button>
+        </div>
+        <div class="env-config-item">
+          <label for="env-dev">Dev:</label>
+          <input type="text" id="env-dev" placeholder="https://prod.preventivehealth.ai/drkai" />
+          <button>Save</button>
+        </div>
+        <div class="env-config-item">
+          <label for="env-prod">Prod:</label>
+          <input type="text" id="env-prod" placeholder="https://kaiprod.preventivehealth.ai/drkai" />
+          <button>Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Box Button -->
+  <button class="add-box-btn" id="add-box-btn" aria-label="Add new box">+</button>
+</div>
+
+<!-- Modal for Add/Edit Box -->
+<div class="modal-overlay" id="box-modal">
+  <div class="modal">
+    <button class="modal-close" id="modal-close" type="button" aria-label="Close">&times;</button>
+    <h2 id="modal-title">Add New Box</h2>
+    <form class="modal-form" id="box-form">
+      <div class="form-group">
+        <label for="box-env">Environment</label>
+        <select id="box-env" required>
+          <option value="local">Localhost</option>
+          <option value="dev">Dev</option>
+          <option value="prod" selected>Prod</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="box-container-name">Container Name</label>
+        <input
+          type="text"
+          id="box-container-name"
+          placeholder="e.g., Local:Admin"
+          required
+        />
+        <small style="display: block; margin-top: 4px; color: #6b7280;">Must match a container in Firefox exactly</small>
+      </div>
+
+      <div class="form-group">
+        <label for="box-display-name">Display Name</label>
+        <input
+          type="text"
+          id="box-display-name"
+          placeholder="e.g., Admin"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Color</label>
+        <div class="color-picker-group" id="color-picker">
+          <!-- Colors will be dynamically added by JavaScript -->
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-danger hidden" id="delete-btn">Delete</button>
+        <button type="submit" class="btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
