@@ -9,8 +9,8 @@ const VISIBLE_ENVS_KEY = 'firefox-container-visible-envs';
 // Default environment URLs
 const DEFAULT_ENVS = {
   local: 'http://localhost:3000/drkai',
-  dev: 'https://prod.preventivehealth.ai/drkai',
-  prod: 'https://kaiprod.preventivehealth.ai/drkai'
+  dev: 'https://app-dev.preventivehealth.ai/drkai',
+  prod: 'https://app.preventivehealth.ai/drkai'
 };
 
 // Default boxes (existing setup)
