@@ -992,16 +992,11 @@
                     // Log the WhatsApp URL for debugging
                     console.log('Opening WhatsApp URL:', whatsappURL);
 
-                    // Create a temporary link with rel="noreferrer" to ensure no referrer is sent
-                    const tempLink = document.createElement('a');
-                    tempLink.href = whatsappURL;
-                    tempLink.rel = 'noreferrer noopener';
-                    tempLink.target = '_self';
-
-                    // Append to body, click, and remove
-                    document.body.appendChild(tempLink);
-                    tempLink.click();
-                    document.body.removeChild(tempLink);
+                    // Use meta refresh redirect - this breaks the referrer chain more reliably
+                    const metaRefresh = document.createElement('meta');
+                    metaRefresh.httpEquiv = 'refresh';
+                    metaRefresh.content = '0;url=' + whatsappURL;
+                    document.head.appendChild(metaRefresh);
                 });
 
                 // Update code snippet display
