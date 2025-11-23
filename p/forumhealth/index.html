@@ -963,6 +963,34 @@
             }
 
             /**
+             * Check if page is in a sandboxed iframe
+             */
+            function isInSandboxedIframe() {
+                try {
+                    // Try to access parent window
+                    return window.self !== window.top;
+                } catch (e) {
+                    return true;
+                }
+            }
+
+            /**
+             * Break out of iframe by opening in new window
+             */
+            function breakoutOfIframe(url) {
+                try {
+                    // Try to open in parent window
+                    if (window.top) {
+                        window.top.location.href = url;
+                        return true;
+                    }
+                } catch (e) {
+                    console.error('Cannot access parent window:', e);
+                }
+                return false;
+            }
+
+            /**
              * Initialize page with token
              */
             function initializePage() {
@@ -980,9 +1008,30 @@
                     // Show warning in console but still allow (backend will validate)
                 }
 
-                // Update WhatsApp link
+                // Build WhatsApp URL
                 const whatsappURL = buildWhatsAppURL(token);
-                whatsappLink.href = whatsappURL;
+
+                // Check if in sandboxed iframe
+                if (isInSandboxedIframe()) {
+                    console.log('Detected sandboxed iframe - using breakout method');
+
+                    // Remove default href
+                    whatsappLink.href = 'javascript:void(0)';
+
+                    // Add click handler to break out of iframe
+                    whatsappLink.addEventListener('click', function(e) {
+                        e.preventDefault();
+
+                        // Try to navigate parent window
+                        if (!breakoutOfIframe(whatsappURL)) {
+                            // Fallback: copy URL to clipboard and show instructions
+                            alert('Please copy this link and open it in a new browser tab:\n\n' + whatsappURL);
+                        }
+                    });
+                } else {
+                    // Normal operation - set href
+                    whatsappLink.href = whatsappURL;
+                }
 
                 // Update code snippet display
                 tokenDisplay.textContent = `/join ${token}`;
