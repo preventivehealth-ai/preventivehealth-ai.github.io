@@ -669,7 +669,7 @@
             <div style="margin-bottom: 40px;">
                 <!-- WhatsApp Button (Dynamic Link) -->
                 <div class="whatsapp-button-container">
-                    <a id="whatsapp-link" href="#" class="btn" target="_blank" rel="noopener noreferrer"
+                    <button id="whatsapp-link" class="btn"
                         style="background: linear-gradient(to right, #22c55e, #16a34a); display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 16px;">
                         <svg style="width: 24px; height: 24px;" fill="currentColor" viewBox="0 0 24 24">
                             <path
@@ -677,7 +677,7 @@
                             </path>
                         </svg>
                         Join the Community
-                    </a>
+                    </button>
                 </div>
                 <p style="font-size: 0.85rem; color: #666; margin-top: 12px; max-width: none;">This will open WhatsApp
                     with the message
@@ -982,9 +982,22 @@
                     // Show warning in console but still allow (backend will validate)
                 }
 
-                // Update WhatsApp link
+                // Build WhatsApp URL
                 const whatsappURL = buildWhatsAppURL(token);
-                whatsappLink.href = whatsappURL;
+
+                // Add click handler to button to bypass CSP restrictions
+                whatsappLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    // Try to open in new window first (better UX - keeps landing page open)
+                    const newWindow = window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+
+                    // Fallback: If popup blocked or CSP restriction, navigate in same window
+                    if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+                        console.log('Popup blocked or failed, using direct navigation');
+                        window.location.href = whatsappURL;
+                    }
+                });
 
                 // Update code snippet display
                 tokenDisplay.textContent = `/join ${token}`;
