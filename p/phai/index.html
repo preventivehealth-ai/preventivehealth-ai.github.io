@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <title>Welcome to Forum Circle - Dr. Kai</title>
+    <link rel="stylesheet" href="https://use.typekit.net/zlo7ebe.css">
+    <style>
+        :root {
+            --color-blue: #243456;
+            --color-cream: #FFF9F3;
+            --color-black: #1D1718;
+            --color-white: #FFFFFF;
+            --font-heading: "loretta", serif;
+            --font-body: "neue-haas-grotesk-text", sans-serif;
+            --spacing-unit: 8px;
+            --container-width: 1200px;
+            --grid-gap: 32px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--color-cream);
+            color: var(--color-black);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        html {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: var(--font-heading);
+            font-weight: 300;
+            color: var(--color-blue);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+        }
+
+        h3 {
+            font-size: 1.75rem;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            max-width: 65ch;
+            word-wrap: break-word;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        code {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background-color: var(--color-blue);
+            color: var(--color-white);
+            padding: 16px 32px;
+            text-decoration: none;
+            border-radius: 4px;
+            /* Sleeker radius */
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-body);
+        }
+
+        .btn:hover {
+            background-color: #1a2640;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--color-blue);
+            color: var(--color-blue);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--color-blue);
+            color: var(--color-white);
+        }
+
+        /* Header */
+        .site-header {
+            padding: 24px 0;
+            background-color: var(--color-cream);
+            border-bottom: 1px solid rgba(36, 52, 86, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--color-blue);
+            font-weight: 400;
+            text-decoration: none;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 48px 0 40px;
+        }
+
+        /* Join CTA Section */
+        .join-cta-section {
+            padding: 48px 0 64px;
+            text-align: left;
+            background-color: var(--color-cream);
+        }
+
+        /* Team Section */
+        .team-section {
+            padding: 48px 0;
+            background-color: var(--color-white);
+            border-top: 3px solid var(--color-blue);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--grid-gap);
+            margin-top: 40px;
+        }
+
+        .team-member {
+            background: var(--color-white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e5e7eb;
+            border-left: 4px solid var(--color-blue);
+            display: grid;
+            grid-template-columns: 1.2fr 1.8fr;
+            gap: 32px;
+            align-items: start;
+            transition: transform 0.3s ease;
+        }
+
+        .team-member-left {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .team-member img {
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            object-fit: cover;
+            margin-bottom: 24px;
+        }
+
+        .team-member h3 {
+            margin-bottom: 4px;
+            font-size: 1.25rem;
+            line-height: 1.2;
+        }
+
+        .team-member .credentials {
+            font-size: 0.95rem;
+            color: var(--color-blue);
+            font-weight: 500;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        .team-member h4 {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-blue);
+            opacity: 0.7;
+            margin-bottom: 16px;
+        }
+
+        .team-member-link {
+            margin-top: auto;
+            display: inline-flex;
+            align-items: center;
+            color: var(--color-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Responsive for Team Member */
+        @media (max-width: 600px) {
+            .team-member {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Pricing & Calendar Section */
+        .pricing-section {
+            padding: 48px 0;
+            background-color: var(--color-white);
+        }
+
+        .pricing-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .pricing-content ul {
+            list-style: none;
+            margin: 24px 0 32px;
+        }
+
+        .pricing-content li {
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .pricing-content li::before {
+            content: "✓";
+            color: var(--color-blue);
+            position: absolute;
+            left: 0;
+        }
+
+        .calendar-wrapper {
+            width: 100%;
+            position: relative;
+            padding-bottom: 75%;
+            /* Aspect ratio 4:3 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .calendar-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .calendar-actions {
+            margin-top: 24px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* What to Expect Section */
+        .expect-section {
+            padding: 48px 0;
+            background-color: var(--color-cream);
+        }
+
+        .expect-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--grid-gap);
+            margin-top: 40px;
+        }
+
+        .value-prop-card {
+            background: var(--color-white);
+            padding: 40px;
+            border-radius: 12px;
+            border-top: 4px solid var(--color-blue);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        /* Upcoming Events Section */
+        .events-section {
+            padding: 48px 0;
+            background-color: var(--color-blue);
+            color: var(--color-white);
+        }
+
+        .events-section h2,
+        .events-section p {
+            color: var(--color-white);
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--grid-gap);
+            margin-top: 40px;
+        }
+
+        .event-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 32px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .event-card h4 {
+            color: var(--color-cream);
+            margin-bottom: 16px;
+        }
+
+        .event-time {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 8px;
+        }
+
+        /* Join CTA Section */
+        .join-cta-section {
+            padding: 48px 0;
+            text-align: left;
+            background-color: var(--color-white);
+        }
+
+        /* Guidelines Section */
+        .guidelines-section {
+            padding: 48px 0;
+            background-color: var(--color-white);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .guidelines-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+
+        .guidelines-card {
+            background: var(--color-white);
+            padding: 0;
+            box-shadow: none;
+        }
+
+        .guidelines-list {
+            list-style: none;
+        }
+
+        .guidelines-list li {
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+
+        .blue-bold {
+            color: var(--color-blue);
+            font-weight: 600;
+        }
+
+        /* How to Use Section */
+        .how-to-use-section {
+            padding: 48px 0;
+            background-color: var(--color-cream);
+        }
+
+        /* Circled Steps for Join Section */
+        .step-list {
+            list-style: none;
+            counter-reset: step-counter;
+            padding: 0;
+            margin-top: 24px;
+        }
+
+        .step-item {
+            position: relative;
+            padding-left: 48px;
+            margin-bottom: 24px;
+        }
+
+        .step-item::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: -4px;
+            width: 32px;
+            height: 32px;
+            background-color: var(--color-blue);
+            color: var(--color-white);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: var(--color-blue);
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .how-to-use-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .how-to-use-card h4 {
+            color: var(--color-blue);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        /* Disclaimer & Footer */
+        .medical-disclaimer {
+            background-color: #FEFCE8;
+            /* Yellow-50 */
+            border: 1px solid #FEF08A;
+            /* Yellow-200 */
+            padding: 40px 0;
+            color: #854D0E;
+            /* Yellow-800 */
+        }
+
+        .site-footer {
+            background-color: var(--color-white);
+            padding: 40px 0;
+            text-align: left;
+            font-size: 0.9rem;
+            color: #6B7280;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        .site-footer a {
+            color: var(--color-blue);
+            text-decoration: none;
+        }
+
+        /* Error Message Styling */
+        .error-message {
+            display: none;
+            background-color: #FEE2E2;
+            border: 1px solid #FCA5A5;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 32px;
+            color: #991B1B;
+        }
+
+        .error-message h3 {
+            color: #991B1B;
+            margin-bottom: 8px;
+            font-size: 1.25rem;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Loading State */
+        .whatsapp-button-container {
+            position: relative;
+        }
+
+        .whatsapp-button-container.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+
+            .pricing-layout,
+            .guidelines-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .guidelines-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .team-grid,
+            .expect-grid,
+            .events-grid,
+            .how-to-use-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-inner {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .hero-section {
+                padding: 40px 0;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+
+            .team-member {
+                padding: 24px;
+            }
+
+            .value-prop-card,
+            .how-to-use-card {
+                padding: 24px;
+            }
+
+            /* Mobile fix for manual join section */
+            .manual-join-box {
+                padding: 16px !important;
+            }
+
+            .manual-join-box ol li>div {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+            }
+
+            .manual-join-box ol li>div>div {
+                width: 100% !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                padding: 8px !important;
+                box-sizing: border-box !important;
+            }
+
+            .manual-join-box code {
+                font-size: 0.7rem !important;
+                word-break: break-all !important;
+                display: block !important;
+                max-width: 100% !important;
+                white-space: normal !important;
+                overflow-wrap: break-word !important;
+            }
+
+            .manual-join-box button {
+                margin-left: 0 !important;
+                margin-top: 8px !important;
+                width: 100% !important;
+                justify-content: center !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="#" class="logo">Forum Circle | Menopause</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container hero-content">
+            <p
+                style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--color-blue); font-weight: 600; margin-bottom: 16px;">
+                You've been successfully registered</p>
+            <h1>Welcome to <em>your</em> circle</h1>
+            <p class="intro-lead" style="font-size: 1.25rem; color: var(--color-blue);">You're now part of an empowering
+                community dedicated to navigating menopause with confidence and support.</p>
+        </div>
+    </section>
+
+    <!-- Join CTA Section -->
+    <section class="join-cta-section" style="text-align: left; max-width: none;">
+        <div class="container">
+            <!-- Error Message (Hidden by default) -->
+            <div id="error-message" class="error-message">
+                <h3>Invalid Invitation Link</h3>
+                <p>This page requires a valid invitation token. Please check your email for the correct link or contact support at <a href="mailto:support@phai.com" style="color: #991B1B; text-decoration: underline;">support@phai.com</a></p>
+            </div>
+
+            <!-- User Guidance (if button doesn't work) -->
+            <div id="user-guidance" style="display: none; background-color: #FEF3C7; border: 1px solid #FDE047; border-radius: 8px; padding: 16px; margin-bottom: 24px; color: #92400E;">
+                <p style="margin: 0; font-size: 0.9rem;">
+                    <strong>📱 Having trouble?</strong> If the button below doesn't work, try opening this page in your default browser (not an email app or in-app browser). Alternatively, use the "Copy Link" button to manually paste the WhatsApp link.
+                </p>
+            </div>
+
+            <h2>Join the Community on WhatsApp</h2>
+            <p style="margin: 0 0 32px;">Click the button below to start your conversation with Doctor Kai and join
+                the community group. Your onboarding code has been preconfigured for your convenience.</p>
+
+            <div style="margin-bottom: 40px;">
+                <!-- WhatsApp Button (Dynamic Link) -->
+                <div class="whatsapp-button-container">
+                    <a id="whatsapp-link" href="#" class="btn" target="_blank" rel="noopener noreferrer"
+                        style="background: linear-gradient(to right, #22c55e, #16a34a); display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 16px;">
+                        <svg style="width: 24px; height: 24px;" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z">
+                            </path>
+                        </svg>
+                        Join the Community
+                    </a>
+                </div>
+
+                <!-- Copy Link Fallback Button -->
+                <div style="margin-top: 16px;">
+                    <button id="copy-link-btn" onclick="copyWhatsAppLink()" class="btn-secondary" style="background-color: transparent; border: 1px solid var(--color-blue); color: var(--color-blue); padding: 12px 24px; display: inline-flex; align-items: center; gap: 8px;">
+                        <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                        Copy WhatsApp Link
+                    </button>
+                    <span id="copy-success" style="display: none; margin-left: 12px; color: #16a34a; font-size: 0.9rem;">✓ Link copied!</span>
+                </div>
+
+                <p style="font-size: 0.85rem; color: #666; margin-top: 12px; max-width: none;">This will open WhatsApp
+                    with the message
+                    <code id="token-display"
+                        style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; color: var(--color-blue); white-space: nowrap;">/join [loading...]</code>
+                    ready to send. Press the send button to begin onboarding and join the community.
+                </p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <h2>Meet your Experts</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="team-member-left">
+                        <img src="https://forumhealth.com/wp-content/uploads/2019/05/Shilpa-Saxena-1-scaled-e1699545138555-768x768.webp"
+                            alt="Dr. Shilpa P. Saxena">
+                        <h3>Dr. Shilpa P. Saxena</h3>
+                        <p class="credentials">MD, IFMCP</p>
+                        <h4>Chief Medical Officer, Forum Health</h4>
+                        <a href="https://forumhealth.com/provider/shilpa-saxena/" target="_blank"
+                            class="team-member-link">
+                            Learn More <span style="margin-left: 4px;">&rarr;</span>
+                        </a>
+                    </div>
+                    <div class="team-member-right">
+                        <p>Dr. Saxena is a Board-Certified family physician and Chief Medical Officer at Forum Health,
+                            specializing in functional medicine approaches to hormone health, autoimmune conditions, and
+                            longevity medicine. With nearly 20 years of experience, she's faculty at the Institute for
+                            Functional Medicine.</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="team-member-left">
+                        <img src="https://forumhealth.com/wp-content/uploads/2025/09/Jocelyn-Segal-APRN-FNP-BC.jpg"
+                            alt="Jocelyn Segal">
+                        <h3>Jocelyn Segal</h3>
+                        <p class="credentials">APRN, FNP-BC</p>
+                        <h4>Family Nurse Practitioner</h4>
+                        <a href="https://forumhealth.com/provider/jocelyn-segal-aprn-fnp-bc/" target="_blank"
+                            class="team-member-link">
+                            Learn More <span style="margin-left: 4px;">&rarr;</span>
+                        </a>
+                    </div>
+                    <div class="team-member-right">
+                        <p>Jocelyn Segal is a board-certified Family Nurse Practitioner with over 30 years of nursing
+                            experience, specializing in hormone imbalance, thyroid disorders, and women's health
+                            transitions. She leads Forum Health Tampa's Hormone Injection Program.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What to Expect Section -->
+    <section class="expect-section">
+        <div class="container">
+            <h2>How to Participate</h2>
+            <p>Actively engage in order to make the most of your experience. Share your journey, ask questions, and
+                connect with others.
+            </p>
+
+            <div class="expect-grid">
+                <div class="value-prop-card">
+                    <h4>1. Join the Community and Share</h4>
+                    <p>Engage with like-minded women who are on the same journey. Share experiences and support one
+                        another in our dedicated forum.</p>
+                </div>
+                <div class="value-prop-card">
+                    <h4>2. Explore Educational Content</h4>
+                    <p>We'll be sharing articles, relevant videos, and curated content to inform and inspire you on your
+                        menopause journey.</p>
+                </div>
+                <div class="value-prop-card">
+                    <h4>3. Participate in Live Events</h4>
+                    <p>Don't miss our upcoming live sessions with experts. These are events to ask and answer questions
+                        with our community.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Events Section -->
+    <section class="events-section">
+        <div class="container">
+            <div
+                style="margin-top: 24px; border-radius: 16px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: start;">
+
+                <!-- Left Column -->
+                <div>
+                    <h2>Upcoming Live Events</h2>
+                    <p style="margin-bottom: 32px; line-height: 1.7;">Live sessions providing education and information
+                        discussion
+                        (60mins) followed by Live Q&A (1 hour).</p>
+                    <p>Event details (theme and expert) and meeting links will be shared with you via the group on
+                        WhatsApp.</p>
+
+                    <!-- Add to Calendar (Dropdown Button)-->
+                    <div style="position: relative; display: inline-block;">
+                        <button
+                            onclick="const menu = document.getElementById('calendar-menu'); menu.style.display = menu.style.display === 'block' ? 'none' : 'block';"
+                            class="btn"
+                            style="background: var(--color-white); color: var(--color-blue); font-weight: 600;">
+                            Add to Calendar
+                        </button>
+
+                        <div id="calendar-menu"
+                            style="display: none; position: absolute; margin-top: 8px; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); min-width: 240px; z-index: 50; overflow: hidden;">
+                            <!-- GOOGLE -->
+                            <a href="https://calendar.google.com/calendar/u/0?cid=c_b70ca299eb22ac7f9757f0b246bc601c190650a5e25b754073fc9a22b0ea08b2@group.calendar.google.com"
+                                target="_blank" rel="noopener noreferrer"
+                                style="display: block; padding: 14px 18px; text-decoration: none; color: #111827; font-family: var(--font-body); font-size: 14px; font-weight: 500; transition: background-color 0.2s; border-bottom: 1px solid #f3f4f6;"
+                                onmouseover="this.style.backgroundColor='#f9fafb'"
+                                onmouseout="this.style.backgroundColor='transparent'">
+                                Google Calendar
+                            </a>
+                            <!-- ICS -->
+                            <a href="https://calendar.google.com/calendar/ical/c_b70ca299eb22ac7f9757f0b246bc601c190650a5e25b754073fc9a22b0ea08b2@group.calendar.google.com/public/basic.ics"
+                                target="_blank" rel="noopener noreferrer"
+                                style="display: block; padding: 14px 18px; text-decoration: none; color: #111827; font-family: var(--font-body); font-size: 14px; font-weight: 500; transition: background-color 0.2s;"
+                                onmouseover="this.style.backgroundColor='#f9fafb'"
+                                onmouseout="this.style.backgroundColor='transparent'">
+                                Outlook / Apple / Other (.ics)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div>
+                    <h3 style="color: var(--color-white); margin-bottom: 12px; font-size: 1.5rem;">Key Dates</h3>
+                    <p style="color: rgba(255,255,255,0.85); margin-bottom: 24px; font-size: 0.95rem;">Block your
+                        calendar for the following dates:</p>
+
+                    <ul
+                        style="list-style: none; color: var(--color-white); font-size: 1.05rem; line-height: 2; padding: 0; margin: 0;">
+                        <li style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">December 1, 2025 —
+                            12:30PM - 2:30PM ET</li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">December 15, 2025 —
+                            12:30PM - 2:30PM ET</li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">January 5, 2026 —
+                            12:30PM - 2:30PM ET</li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">January 19, 2026 —
+                            12:30PM - 2:30PM ET</li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">February 2, 2026 —
+                            12:30PM - 2:30PM ET</li>
+                        <li style="padding: 10px 0;">February 16, 2026 — 12:30PM - 2:30PM ET</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- How to Ask Questions -->
+    <section class="how-to-use-section">
+        <div class="container">
+            <h2>How to Ask Questions</h2>
+            <div class="how-to-use-grid">
+                <div class="how-to-use-card">
+                    <h4>Ask in Public</h4>
+                    <p>We encourage you to ask questions publicly so the entire community can benefit from the answers.
+                        Your question might help someone else!</p>
+                </div>
+                <div class="how-to-use-card">
+                    <h4>Private Questions Welcome</h4>
+                    <p>Not comfortable asking in public? We also have a private form inside the community where you can
+                        ask questions privately.</p>
+                </div>
+                <div class="how-to-use-card">
+                    <h4>24/7 Support</h4>
+                    <p>Whether it's 2 PM or 2 AM, Dr. Kai is awake and ready to help.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Guidelines Section -->
+    <section class="guidelines-section">
+        <div class="container">
+            <div class="guidelines-card">
+                <h2 style="margin-bottom: 16px;">Community Guidelines</h2>
+                <p style="margin-bottom: 32px; max-width: 800px;">Menopause can involve sensitive topics. We encourage
+                    you
+                    to participate openly, but please help us maintain a safe and inclusive space by adhering to the
+                    following guidelines:</p>
+
+                <ul class="guidelines-list">
+                    <li><span class="blue-bold">Share Experiences, Not Prescriptions</span> — Feel free to share what
+                        worked for you, but avoid giving explicit medical advice.</li>
+                    <li><span class="blue-bold">Everyone is Welcome</span> — We are an inclusive community welcoming all
+                        those experiencing perimenopause and menopause.</li>
+                    <li><span class="blue-bold">Respect Privacy</span> — "What is said here, stays here." This is
+                        crucial for everyone's safety and comfort.</li>
+                    <li><span class="blue-bold">Disagree Respectfully</span> — "Challenge the idea, not the person."
+                        Healthy debate is welcome; personal attacks are not.</li>
+                    <li><span class="blue-bold">No Solicitation</span> — Please keep the space free of sales pitches,
+                        MLMs, or product promotions.</li>
+                    <li><span class="blue-bold">Be Kind</span> — We have zero tolerance for hate speech, racism, or
+                        discrimination of any kind.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Medical Disclaimer -->
+    <section class="medical-disclaimer">
+        <div class="container">
+            <h4 style="color: #854D0E; font-weight: 600; margin-bottom: 12px;">Medical Disclaimer</h4>
+            <p style="font-size: 0.9rem; max-width: none;">Doctor Kai is a medical information service
+                designed to provide general health guidance and support by a physician and an RN that are assisted by an
+                AI platform. However, please note the following important
+                limitations:</p>
+            <ul style="list-style: disc; padding-left: 20px; font-size: 0.9rem; margin-top: 12px;">
+                <li>This service does not provide medical diagnosis or treatment recommendations</li>
+                <li>AI responses should not replace professional medical advice from licensed healthcare providers</li>
+                <li>In case of medical emergencies, always contact emergency services or visit the nearest hospital</li>
+                <li>For serious symptoms or persistent health concerns, consult with a qualified healthcare professional
+                </li>
+                <li>Information provided is for educational purposes only and may not be suitable for your specific
+                    situation</li>
+            </ul>
+            <p style="font-weight: bold; font-size: 0.9rem; max-width: none; margin-top: 12px;">
+                <span>
+                    By using Doctor Kai, you acknowledge that you understand these limitations and will seek appropriate
+                    professional medical care when needed.
+                </span>
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>Questions or issues? <a href="mailto:support@phai.com">Contact Support</a></p>
+            <p style="margin-top: 8px; font-size: 0.85rem;">This invitation link expires on 11/19/2025</p>
+        </div>
+    </footer>
+
+    <!-- Token Handling JavaScript -->
+    <script>
+        (function() {
+            // Constants
+            const WHATSAPP_BASE_URL = 'https://wa.me/918793070914';
+            const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+            // DOM Elements
+            const whatsappLink = document.getElementById('whatsapp-link');
+            const tokenDisplay = document.getElementById('token-display');
+            const errorMessage = document.getElementById('error-message');
+
+            /**
+             * Extract token from URL query parameter
+             */
+            function getTokenFromURL() {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get('token');
+            }
+
+            /**
+             * Validate token format (UUID v4)
+             */
+            function isValidToken(token) {
+                return token && UUID_REGEX.test(token);
+            }
+
+            /**
+             * Build WhatsApp deep link with token
+             */
+            function buildWhatsAppURL(token) {
+                const message = `/join ${token}`;
+                return `${WHATSAPP_BASE_URL}?text=${encodeURIComponent(message)}`;
+            }
+
+            /**
+             * Show error message and hide WhatsApp button
+             */
+            function showError() {
+                errorMessage.classList.add('show');
+                whatsappLink.style.display = 'none';
+                tokenDisplay.textContent = '[Invalid Token]';
+            }
+
+            /**
+             * Initialize page with token
+             */
+            function initializePage() {
+                const token = getTokenFromURL();
+
+                // Check if token exists and is valid
+                if (!token) {
+                    console.error('No token provided in URL');
+                    showError();
+                    return;
+                }
+
+                if (!isValidToken(token)) {
+                    console.warn('Invalid token format:', token);
+                    // Show warning in console but still allow (backend will validate)
+                }
+
+                // Update WhatsApp link
+                const whatsappURL = buildWhatsAppURL(token);
+                whatsappLink.href = whatsappURL;
+
+                // Update code snippet display
+                tokenDisplay.textContent = `/join ${token}`;
+
+                // Show user guidance after 2 seconds (gives time for user to see the page)
+                setTimeout(function() {
+                    const userGuidance = document.getElementById('user-guidance');
+                    if (userGuidance) {
+                        userGuidance.style.display = 'block';
+                    }
+                }, 2000);
+
+                console.log('Page initialized successfully with token');
+            }
+
+            // Initialize on page load
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initializePage);
+            } else {
+                initializePage();
+            }
+        })();
+
+        /**
+         * Copy WhatsApp link to clipboard (fallback option)
+         */
+        function copyWhatsAppLink() {
+            const whatsappLink = document.getElementById('whatsapp-link');
+            const copySuccess = document.getElementById('copy-success');
+            const copyBtn = document.getElementById('copy-link-btn');
+
+            if (!whatsappLink || !whatsappLink.href || whatsappLink.href === '#') {
+                alert('WhatsApp link is not ready yet. Please wait a moment and try again.');
+                return;
+            }
+
+            // Modern clipboard API
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(whatsappLink.href)
+                    .then(function() {
+                        // Show success message
+                        copySuccess.style.display = 'inline';
+                        copyBtn.textContent = '✓ Copied!';
+
+                        // Reset after 3 seconds
+                        setTimeout(function() {
+                            copySuccess.style.display = 'none';
+                            copyBtn.innerHTML = '<svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> Copy WhatsApp Link';
+                        }, 3000);
+                    })
+                    .catch(function(err) {
+                        console.error('Failed to copy link:', err);
+                        fallbackCopy(whatsappLink.href);
+                    });
+            } else {
+                // Fallback for older browsers
+                fallbackCopy(whatsappLink.href);
+            }
+        }
+
+        /**
+         * Fallback copy method for older browsers
+         */
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+
+            try {
+                document.execCommand('copy');
+                document.getElementById('copy-success').style.display = 'inline';
+                setTimeout(function() {
+                    document.getElementById('copy-success').style.display = 'none';
+                }, 3000);
+            } catch (err) {
+                alert('Could not copy link. Please copy it manually: ' + text);
+            }
+
+            document.body.removeChild(textarea);
+        }
+    </script>
+</body>
+
+</html>
