@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="referrer" content="no-referrer-when-downgrade">
+    <meta name="referrer" content="no-referrer">
     <meta http-equiv="Content-Security-Policy"
           content="default-src 'self' https://use.typekit.net https://forumhealth.com https://calendar.google.com; style-src 'self' 'unsafe-inline' https://use.typekit.net; script-src 'self' 'unsafe-inline'; img-src 'self' https: data:; font-src 'self' https://use.typekit.net data:; connect-src 'self' https://wa.me https://api.whatsapp.com; frame-src https://calendar.google.com; form-action 'self' https://wa.me https://api.whatsapp.com;">
     <title>Welcome to Forum Circle - Dr. Kai</title>
@@ -985,18 +985,23 @@
                 // Build WhatsApp URL
                 const whatsappURL = buildWhatsAppURL(token);
 
-                // Add click handler to button to bypass CSP restrictions
+                // Add click handler to button
                 whatsappLink.addEventListener('click', function(e) {
                     e.preventDefault();
 
-                    // Try to open in new window first (better UX - keeps landing page open)
-                    const newWindow = window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+                    // Log the WhatsApp URL for debugging
+                    console.log('Opening WhatsApp URL:', whatsappURL);
 
-                    // Fallback: If popup blocked or CSP restriction, navigate in same window
-                    if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-                        console.log('Popup blocked or failed, using direct navigation');
-                        window.location.href = whatsappURL;
-                    }
+                    // Create a temporary link with rel="noreferrer" to ensure no referrer is sent
+                    const tempLink = document.createElement('a');
+                    tempLink.href = whatsappURL;
+                    tempLink.rel = 'noreferrer noopener';
+                    tempLink.target = '_self';
+
+                    // Append to body, click, and remove
+                    document.body.appendChild(tempLink);
+                    tempLink.click();
+                    document.body.removeChild(tempLink);
                 });
 
                 // Update code snippet display
