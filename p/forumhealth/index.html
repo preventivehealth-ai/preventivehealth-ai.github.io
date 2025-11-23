@@ -4,9 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="referrer" content="no-referrer">
-    <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self' https://use.typekit.net https://forumhealth.com https://calendar.google.com; style-src 'self' 'unsafe-inline' https://use.typekit.net; script-src 'self' 'unsafe-inline'; img-src 'self' https: data:; font-src 'self' https://use.typekit.net data:; connect-src 'self' https://wa.me https://api.whatsapp.com; frame-src https://calendar.google.com; form-action 'self' https://wa.me https://api.whatsapp.com;">
+    <meta name="referrer" content="no-referrer-when-downgrade">
     <title>Welcome to Forum Circle - Dr. Kai</title>
     <link rel="stylesheet" href="https://use.typekit.net/zlo7ebe.css">
     <style>
@@ -669,7 +667,7 @@
             <div style="margin-bottom: 40px;">
                 <!-- WhatsApp Button (Dynamic Link) -->
                 <div class="whatsapp-button-container">
-                    <button id="whatsapp-link" class="btn"
+                    <a id="whatsapp-link" href="#" class="btn" target="_blank" rel="noopener noreferrer"
                         style="background: linear-gradient(to right, #22c55e, #16a34a); display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 16px;">
                         <svg style="width: 24px; height: 24px;" fill="currentColor" viewBox="0 0 24 24">
                             <path
@@ -677,7 +675,7 @@
                             </path>
                         </svg>
                         Join the Community
-                    </button>
+                    </a>
                 </div>
                 <p style="font-size: 0.85rem; color: #666; margin-top: 12px; max-width: none;">This will open WhatsApp
                     with the message
@@ -982,22 +980,9 @@
                     // Show warning in console but still allow (backend will validate)
                 }
 
-                // Build WhatsApp URL
+                // Update WhatsApp link
                 const whatsappURL = buildWhatsAppURL(token);
-
-                // Add click handler to button
-                whatsappLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-
-                    // Log the WhatsApp URL for debugging
-                    console.log('Opening WhatsApp URL:', whatsappURL);
-
-                    // Use meta refresh redirect - this breaks the referrer chain more reliably
-                    const metaRefresh = document.createElement('meta');
-                    metaRefresh.httpEquiv = 'refresh';
-                    metaRefresh.content = '0;url=' + whatsappURL;
-                    document.head.appendChild(metaRefresh);
-                });
+                whatsappLink.href = whatsappURL;
 
                 // Update code snippet display
                 tokenDisplay.textContent = `/join ${token}`;
