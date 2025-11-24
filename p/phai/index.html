@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer-when-downgrade">
-    <meta http-equiv="Content-Security-Policy" content="navigate-to https://wa.me/ https://api.whatsapp.com/ 'unsafe-allow-redirects';">
     <title>Welcome to Forum Circle - Dr. Kai</title>
     <link rel="stylesheet" href="https://use.typekit.net/zlo7ebe.css">
     <style>
@@ -935,7 +934,7 @@
     <script>
         (function() {
             // Constants
-            const REDIRECT_BASE_URL = 'https://pages.preventivehealth.ai/api/whatsapp-redirect.html';
+            const WHATSAPP_BASE_URL = 'https://wa.me/918793070914';
             const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
             // DOM Elements
@@ -959,10 +958,11 @@
             }
 
             /**
-             * Build redirect URL with token (redirect endpoint handles WhatsApp deep link)
+             * Build WhatsApp deep link with token
              */
-            function buildRedirectURL(token) {
-                return `${REDIRECT_BASE_URL}?token=${encodeURIComponent(token)}`;
+            function buildWhatsAppURL(token) {
+                const message = `/join ${token}`;
+                return `${WHATSAPP_BASE_URL}?text=${encodeURIComponent(message)}`;
             }
 
             /**
@@ -995,8 +995,8 @@
                     // Show warning in console but still allow (backend will validate)
                 }
 
-                // Build and store redirect URL
-                whatsappURL = buildRedirectURL(token);
+                // Build and store WhatsApp URL
+                whatsappURL = buildWhatsAppURL(token);
                 window.whatsappURL = whatsappURL;  // Also store globally
 
                 // Set href directly on anchor tag (no onclick needed)
