@@ -935,7 +935,7 @@
     <script>
         (function() {
             // Constants
-            const WHATSAPP_BASE_URL = 'https://wa.me/918793070914';
+            const REDIRECT_BASE_URL = 'https://pages.preventivehealth.ai/api/whatsapp-redirect.html';
             const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
             // DOM Elements
@@ -959,11 +959,10 @@
             }
 
             /**
-             * Build WhatsApp deep link with token
+             * Build redirect URL with token (redirect endpoint handles WhatsApp deep link)
              */
-            function buildWhatsAppURL(token) {
-                const message = `/join ${token}`;
-                return `${WHATSAPP_BASE_URL}?text=${encodeURIComponent(message)}`;
+            function buildRedirectURL(token) {
+                return `${REDIRECT_BASE_URL}?token=${encodeURIComponent(token)}`;
             }
 
             /**
@@ -996,8 +995,8 @@
                     // Show warning in console but still allow (backend will validate)
                 }
 
-                // Build and store WhatsApp URL
-                whatsappURL = buildWhatsAppURL(token);
+                // Build and store redirect URL
+                whatsappURL = buildRedirectURL(token);
                 window.whatsappURL = whatsappURL;  // Also store globally
 
                 // Set href directly on anchor tag (no onclick needed)
