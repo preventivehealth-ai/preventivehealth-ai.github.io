@@ -981,7 +981,7 @@
                 tokenDisplay.textContent = '[Invalid Token]';
             }
 
-            // Store WhatsApp URL globally for button click
+            // Store WhatsApp URL in IIFE scope
             let whatsappURL = '';
 
             /**
@@ -1004,6 +1004,7 @@
 
                 // Build and store WhatsApp URL
                 whatsappURL = buildWhatsAppURL(token);
+                window.whatsappURL = whatsappURL;  // Also store globally
 
                 // Update code snippet display
                 tokenDisplay.textContent = `/join ${token}`;
@@ -1019,26 +1020,30 @@
                 console.log('Page initialized successfully with token');
             }
 
-            /**
-             * Open WhatsApp link using window.location (bypasses popup blocking)
-             */
-            function openWhatsApp() {
-                if (!whatsappURL) {
-                    alert('WhatsApp link is not ready yet. Please wait a moment and try again.');
-                    return;
-                }
-
-                console.log('Opening WhatsApp:', whatsappURL);
-                window.location.href = whatsappURL;
-            }
-
             // Initialize on page load
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', initializePage);
             } else {
                 initializePage();
             }
+
+            // Make whatsappURL accessible globally for openWhatsApp function
+            window.whatsappURL = whatsappURL;
         })();
+
+        /**
+         * Open WhatsApp link using window.location (bypasses popup blocking)
+         * Global function accessible from onclick
+         */
+        function openWhatsApp() {
+            if (!window.whatsappURL) {
+                alert('WhatsApp link is not ready yet. Please wait a moment and try again.');
+                return;
+            }
+
+            console.log('Opening WhatsApp:', window.whatsappURL);
+            window.location.href = window.whatsappURL;
+        }
 
         /**
          * Copy WhatsApp link to clipboard (fallback option)
@@ -1047,14 +1052,14 @@
             const copySuccess = document.getElementById('copy-success');
             const copyBtn = document.getElementById('copy-link-btn');
 
-            if (!whatsappURL) {
+            if (!window.whatsappURL) {
                 alert('WhatsApp link is not ready yet. Please wait a moment and try again.');
                 return;
             }
 
             // Modern clipboard API
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(whatsappURL)
+                navigator.clipboard.writeText(window.whatsappURL)
                     .then(function() {
                         // Show success message
                         copySuccess.style.display = 'inline';
@@ -1068,11 +1073,11 @@
                     })
                     .catch(function(err) {
                         console.error('Failed to copy link:', err);
-                        fallbackCopy(whatsappURL);
+                        fallbackCopy(window.whatsappURL);
                     });
             } else {
                 // Fallback for older browsers
-                fallbackCopy(whatsappURL);
+                fallbackCopy(window.whatsappURL);
             }
         }
 
