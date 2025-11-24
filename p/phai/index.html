@@ -660,13 +660,6 @@
                 <p>This page requires a valid invitation token. Please check your email for the correct link or contact support at <a href="mailto:support@phai.com" style="color: #991B1B; text-decoration: underline;">support@phai.com</a></p>
             </div>
 
-            <!-- User Guidance (if button doesn't work) -->
-            <div id="user-guidance" style="display: none; background-color: #FEF3C7; border: 1px solid #FDE047; border-radius: 8px; padding: 16px; margin-bottom: 24px; color: #92400E;">
-                <p style="margin: 0; font-size: 0.9rem;">
-                    <strong>📱 Having trouble?</strong> If the button below doesn't work, try opening this page in your default browser (not an email app or in-app browser). Alternatively, use the "Copy Link" button to manually paste the WhatsApp link.
-                </p>
-            </div>
-
             <h2>Join the Community on WhatsApp</h2>
             <p style="margin: 0 0 32px;">Click the button below to start your conversation with Doctor Kai and join
                 the community group. Your onboarding code has been preconfigured for your convenience.</p>
@@ -1011,14 +1004,6 @@
 
                 // Update code snippet display
                 tokenDisplay.textContent = `/join ${token}`;
-
-                // Show user guidance after 2 seconds (gives time for user to see the page)
-                setTimeout(function() {
-                    const userGuidance = document.getElementById('user-guidance');
-                    if (userGuidance) {
-                        userGuidance.style.display = 'block';
-                    }
-                }, 2000);
 
                 console.log('Page initialized successfully with token');
             }
