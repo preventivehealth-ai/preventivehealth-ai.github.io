@@ -657,7 +657,7 @@
             <!-- Error Message (Hidden by default) -->
             <div id="error-message" class="error-message">
                 <h3>Invalid Invitation Link</h3>
-                <p>This page requires a valid invitation token. Please check your email for the correct link or contact support at <a href="mailto:support@phai.com" style="color: #991B1B; text-decoration: underline;">support@phai.com</a></p>
+                <p>This page requires a valid onboarding code. Please check your email for the correct link or contact support at <a href="mailto:support@phai.com" style="color: #991B1B; text-decoration: underline;">support@phai.com</a></p>
             </div>
 
             <h2>Join the Community on WhatsApp</h2>
@@ -943,25 +943,25 @@
             const errorMessage = document.getElementById('error-message');
 
             /**
-             * Extract token from URL query parameter
+             * Extract onboarding_code from URL query parameter
              */
-            function getTokenFromURL() {
+            function getOnboardingCodeFromURL() {
                 const urlParams = new URLSearchParams(window.location.search);
-                return urlParams.get('token');
+                return urlParams.get('onboarding_code');
             }
 
             /**
-             * Validate token format (UUID v4)
+             * Validate onboarding_code format (UUID v4)
              */
-            function isValidToken(token) {
-                return token && UUID_REGEX.test(token);
+            function isValidOnboardingCode(code) {
+                return code && UUID_REGEX.test(code);
             }
 
             /**
-             * Build WhatsApp deep link with token
+             * Build WhatsApp deep link with onboarding_code
              */
-            function buildWhatsAppURL(token) {
-                const message = `/join ${token}`;
+            function buildWhatsAppURL(onboardingCode) {
+                const message = `/join ${onboardingCode}`;
                 return `${WHATSAPP_BASE_URL}?text=${encodeURIComponent(message)}`;
             }
 
@@ -971,41 +971,41 @@
             function showError() {
                 errorMessage.classList.add('show');
                 whatsappLink.style.display = 'none';
-                tokenDisplay.textContent = '[Invalid Token]';
+                tokenDisplay.textContent = '[Invalid Onboarding Code]';
             }
 
             // Store WhatsApp URL in IIFE scope
             let whatsappURL = '';
 
             /**
-             * Initialize page with token
+             * Initialize page with onboarding_code
              */
             function initializePage() {
-                const token = getTokenFromURL();
+                const onboardingCode = getOnboardingCodeFromURL();
 
-                // Check if token exists and is valid
-                if (!token) {
-                    console.error('No token provided in URL');
+                // Check if onboarding_code exists and is valid
+                if (!onboardingCode) {
+                    console.error('No onboarding_code provided in URL');
                     showError();
                     return;
                 }
 
-                if (!isValidToken(token)) {
-                    console.warn('Invalid token format:', token);
+                if (!isValidOnboardingCode(onboardingCode)) {
+                    console.warn('Invalid onboarding_code format:', onboardingCode);
                     // Show warning in console but still allow (backend will validate)
                 }
 
                 // Build and store WhatsApp URL
-                whatsappURL = buildWhatsAppURL(token);
+                whatsappURL = buildWhatsAppURL(onboardingCode);
                 window.whatsappURL = whatsappURL;  // Also store globally
 
                 // Set href directly on anchor tag (no onclick needed)
                 whatsappLink.href = whatsappURL;
 
                 // Update code snippet display
-                tokenDisplay.textContent = `/join ${token}`;
+                tokenDisplay.textContent = `/join ${onboardingCode}`;
 
-                console.log('Page initialized successfully with token');
+                console.log('Page initialized successfully with onboarding_code');
             }
 
             // Initialize on page load
