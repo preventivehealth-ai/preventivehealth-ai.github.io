@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Forum Health Engagement Strategy</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --surface-alt: #f1f3f6;
+    --text: #0f172a;
+    --text-muted: #475569;
+    --text-subtle: #64748b;
+    --primary: #0f172a;
+    --accent: #0d9488;
+    --accent-soft: #ccfbf1;
+    --accent-dark: #134e4a;
+    --border: #e2e8f0;
+    --border-soft: #eef0f3;
+    --warning: #d97706;
+    --warning-soft: #fef3c7;
+    --danger: #b91c1c;
+    --danger-soft: #fee2e2;
+    --success: #15803d;
+    --success-soft: #dcfce7;
+    --shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.04);
+    --shadow: 0 1px 3px 0 rgb(15 23 42 / 0.06), 0 1px 2px -1px rgb(15 23 42 / 0.06);
+    --shadow-lg: 0 10px 25px -10px rgb(15 23 42 / 0.18);
+    --radius: 14px;
+    --radius-sm: 8px;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font);
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- Layout ---------- */
+  .app {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: 100vh;
+  }
+  @media (max-width: 900px) {
+    .app { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 32px 22px;
+  }
+  .sidebar-brand {
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .sidebar-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 28px;
+  }
+  .sidebar-nav { display: flex; flex-direction: column; gap: 2px; }
+  .sidebar-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    transition: all 0.15s ease;
+    border-left: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sidebar-nav a:hover {
+    background: var(--surface-alt);
+    color: var(--text);
+  }
+  .sidebar-nav a.active {
+    color: var(--accent-dark);
+    background: var(--accent-soft);
+    font-weight: 600;
+  }
+  .sidebar-nav-num {
+    font-size: 11px;
+    color: var(--text-subtle);
+    font-variant-numeric: tabular-nums;
+    min-width: 18px;
+  }
+  .sidebar-nav a.active .sidebar-nav-num { color: var(--accent-dark); }
+
+  .sidebar-footer {
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-soft);
+    font-size: 12px;
+    color: var(--text-subtle);
+  }
+
+  /* ---------- Main ---------- */
+  main {
+    padding: 56px 64px 96px;
+    max-width: 1100px;
+  }
+  @media (max-width: 900px) {
+    main { padding: 32px 22px 64px; }
+  }
+
+  section { margin-bottom: 88px; scroll-margin-top: 20px; }
+  section:last-of-type { margin-bottom: 0; }
+
+  .section-eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 0 0 16px;
+    letter-spacing: -0.02em;
+  }
+  h2 {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 16px;
+    letter-spacing: -0.01em;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+  p { margin: 0 0 16px; color: var(--text-muted); }
+  p.lead {
+    font-size: 17px;
+    color: var(--text);
+    line-height: 1.55;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #134e4a 100%);
+    color: white;
+    padding: 56px 56px 48px;
+    border-radius: var(--radius);
+    margin-bottom: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  @media (max-width: 900px) { .hero { padding: 36px 28px; } }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgb(20 184 166 / 0.2), transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    color: white;
+    font-size: 42px;
+    margin-bottom: 20px;
+  }
+  .hero p { color: rgb(226 232 240 / 0.9); font-size: 16px; max-width: 740px; }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-top: 36px;
+    position: relative;
+    z-index: 1;
+  }
+  @media (max-width: 700px) { .hero-stats { grid-template-columns: repeat(2, 1fr); } }
+  .stat {
+    padding-top: 20px;
+    border-top: 1px solid rgb(255 255 255 / 0.15);
+  }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.1;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: rgb(204 251 241 / 0.85);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 6px;
+  }
+
+  /* ---------- Cards & generic ---------- */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: all 0.2s ease;
+  }
+  .card-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+  .card h3 { color: var(--text); }
+  .card-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .card-body { color: var(--text-muted); font-size: 14px; }
+  ul, ol { padding-left: 20px; color: var(--text-muted); }
+  ul li, ol li { margin-bottom: 6px; }
+
+  .pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .pill-accent { background: var(--accent-soft); color: var(--accent-dark); }
+  .pill-warn { background: var(--warning-soft); color: var(--warning); }
+  .pill-danger { background: var(--danger-soft); color: var(--danger); }
+  .pill-success { background: var(--success-soft); color: var(--success); }
+  .pill-muted { background: var(--surface-alt); color: var(--text-muted); }
+
+  /* ---------- Situation cards ---------- */
+  .situation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .sit-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    border-top: 3px solid var(--accent);
+  }
+  .sit-card.danger { border-top-color: var(--danger); }
+  .sit-card.warn { border-top-color: var(--warning); }
+  .sit-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--accent-soft);
+    color: var(--accent-dark);
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 14px;
+  }
+  .sit-card.danger .sit-icon { background: var(--danger-soft); color: var(--danger); }
+  .sit-card.warn .sit-icon { background: var(--warning-soft); color: var(--warning); }
+  .sit-card h3 { margin-bottom: 8px; }
+  .sit-card ul { font-size: 14px; padding-left: 18px; margin: 8px 0 0; }
+
+  .understated-box {
+    background: var(--danger-soft);
+    border-left: 4px solid var(--danger);
+    border-radius: var(--radius-sm);
+    padding: 20px 22px;
+    margin-top: 24px;
+  }
+  .understated-box h3 { color: var(--danger); margin-bottom: 6px; }
+
+  /* ---------- Principles ---------- */
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .principle {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    position: relative;
+  }
+  .principle-num {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 10px;
+    opacity: 0.4;
+  }
+  .principle h3 { font-size: 16px; margin-bottom: 6px; }
+  .principle p { font-size: 14px; margin: 0; }
+
+  /* ---------- Alternatives ---------- */
+  .alt-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .alt-tab {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 13px;
+    font-family: var(--font);
+    font-weight: 500;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .alt-tab:hover { background: var(--surface-alt); color: var(--text); }
+  .alt-tab.active {
+    background: var(--text);
+    color: white;
+    border-color: var(--text);
+  }
+  .alt-tab.recommended .badge {
+    background: var(--accent);
+    color: white;
+  }
+  .alt-tab.not-recommended .badge {
+    background: var(--danger-soft);
+    color: var(--danger);
+  }
+  .alt-tab .badge {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: var(--surface-alt);
+    color: var(--text-muted);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .alt-tab.active .badge { background: rgb(255 255 255 / 0.15); color: white; }
+  .alt-panel { display: none; }
+  .alt-panel.active { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  .alt-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+  .alt-card.recommended {
+    border: 2px solid var(--accent);
+    background: linear-gradient(to bottom right, white, var(--accent-soft) 200%);
+  }
+  .alt-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .alt-card h3 { font-size: 22px; }
+  .alt-prose { color: var(--text-muted); margin-bottom: 20px; }
+  .alt-procons { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 700px) { .alt-procons { grid-template-columns: 1fr; } }
+  .procons-block h4 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 8px;
+    color: var(--text-subtle);
+  }
+  .procons-block ul { padding-left: 18px; font-size: 14px; margin: 0; }
+  .procons-block.pros li::marker { color: var(--success); }
+  .procons-block.cons li::marker { color: var(--danger); }
+
+  /* ---------- Phase Timeline ---------- */
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    margin-bottom: 28px;
+    background: var(--surface);
+    padding: 8px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+  }
+  @media (max-width: 900px) { .timeline { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .timeline { grid-template-columns: 1fr; } }
+  .phase-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    padding: 16px 14px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    font-family: var(--font);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+  }
+  .phase-btn:hover { background: var(--surface-alt); }
+  .phase-btn.active {
+    background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+    color: white;
+  }
+  .phase-btn.active .phase-num,
+  .phase-btn.active .phase-duration { color: rgb(204 251 241 / 0.85); }
+  .phase-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .phase-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .phase-btn.active .phase-name { color: white; }
+  .phase-duration {
+    font-size: 12px;
+    color: var(--text-subtle);
+  }
+
+  .phase-detail {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    min-height: 200px;
+  }
+  .phase-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .phase-detail h3 { font-size: 22px; margin-bottom: 4px; }
+  .phase-detail .meta { font-size: 13px; color: var(--text-subtle); }
+  .phase-detail .purpose {
+    background: var(--accent-soft);
+    color: var(--accent-dark);
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    margin-bottom: 20px;
+    border-left: 3px solid var(--accent);
+  }
+  .phase-detail h4 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-subtle);
+    margin: 18px 0 8px;
+  }
+  .phase-detail ul { font-size: 14px; padding-left: 18px; }
+  .phase-detail .out-of-scope {
+    background: var(--danger-soft);
+    color: var(--danger);
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    margin-top: 16px;
+    border-left: 3px solid var(--danger);
+  }
+
+  /* ---------- Workstreams (tabs within Phase 2) ---------- */
+  .ws-tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+    overflow-x: auto;
+  }
+  .ws-tab {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 12px 16px;
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 500;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+  }
+  .ws-tab:hover { color: var(--text); }
+  .ws-tab.active {
+    color: var(--accent-dark);
+    border-bottom-color: var(--accent);
+  }
+  .ws-panel { display: none; }
+  .ws-panel.active { display: block; animation: fadeIn 0.2s ease; }
+  .ws-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  /* ---------- Boundaries (do not) ---------- */
+  .boundaries {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .boundary {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 18px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .boundary-mark {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--danger-soft);
+    color: var(--danger);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  /* ---------- Commercial table ---------- */
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  thead { background: var(--surface-alt); }
+  th, td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  th {
+    font-weight: 600;
+    color: var(--text-subtle);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  tr:last-child td { border-bottom: none; }
+  td { color: var(--text-muted); }
+  td strong { color: var(--text); font-weight: 600; }
+
+  /* ---------- Risks ---------- */
+  .risks-list { display: flex; flex-direction: column; gap: 8px; }
+  .risk-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    transition: all 0.15s ease;
+  }
+  .risk-summary {
+    padding: 16px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    user-select: none;
+    transition: background 0.15s ease;
+  }
+  .risk-summary:hover { background: var(--surface-alt); }
+  .risk-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--warning-soft);
+    color: var(--warning);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .risk-title { flex: 1; font-weight: 500; color: var(--text); font-size: 14px; }
+  .risk-chevron {
+    color: var(--text-subtle);
+    transition: transform 0.2s ease;
+  }
+  .risk-item.open .risk-chevron { transform: rotate(180deg); }
+  .risk-body {
+    display: none;
+    padding: 0 20px 20px 60px;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    font-size: 14px;
+  }
+  @media (max-width: 700px) { .risk-body { grid-template-columns: 1fr; } }
+  .risk-item.open .risk-body { display: grid; }
+  .risk-body h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 6px;
+    color: var(--text-subtle);
+  }
+  .risk-body p { margin: 0; color: var(--text-muted); }
+
+  /* ---------- Metrics ---------- */
+  .metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 700px) { .metrics { grid-template-columns: 1fr; } }
+  .metrics-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+  .metrics-block h3 { margin-bottom: 14px; }
+  .metric {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-soft);
+    gap: 16px;
+  }
+  .metric:last-child { border-bottom: none; }
+  .metric-name { color: var(--text-muted); font-size: 14px; flex: 1; }
+  .metric-target {
+    color: var(--accent-dark);
+    font-weight: 600;
+    font-size: 13px;
+    background: var(--accent-soft);
+    padding: 2px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  /* ---------- Open questions ---------- */
+  .question-block {
+    background: linear-gradient(135deg, #134e4a, #0f172a);
+    color: white;
+    padding: 36px 40px;
+    border-radius: var(--radius);
+  }
+  @media (max-width: 700px) { .question-block { padding: 28px; } }
+  .question-block h2 { color: white; }
+  .question-block p { color: rgb(226 232 240 / 0.85); }
+  .question-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .question-item {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    background: rgb(255 255 255 / 0.06);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgb(255 255 255 / 0.08);
+  }
+  .question-num {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .question-text {
+    color: white;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  /* ---------- Heather summary box ---------- */
+  .heather-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    border-left: 4px solid var(--accent);
+    font-style: italic;
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .heather-box::before {
+    content: '“';
+    display: block;
+    font-size: 48px;
+    line-height: 0.5;
+    color: var(--accent);
+    font-style: normal;
+    margin-bottom: 10px;
+  }
+
+  .footer {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-subtle);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">Internal</div>
+    <div class="sidebar-title">Forum Health<br/>Engagement Strategy</div>
+    <nav class="sidebar-nav">
+      <a href="#overview"><span class="sidebar-nav-num">01</span> Overview</a>
+      <a href="#situation"><span class="sidebar-nav-num">02</span> Situation</a>
+      <a href="#principles"><span class="sidebar-nav-num">03</span> Principles</a>
+      <a href="#alternatives"><span class="sidebar-nav-num">04</span> Alternatives</a>
+      <a href="#engagement"><span class="sidebar-nav-num">05</span> Engagement Shape</a>
+      <a href="#playbook"><span class="sidebar-nav-num">06</span> Phase Playbook</a>
+      <a href="#workstreams"><span class="sidebar-nav-num">07</span> Workstreams</a>
+      <a href="#boundaries"><span class="sidebar-nav-num">08</span> Boundaries</a>
+      <a href="#risks"><span class="sidebar-nav-num">09</span> Risks</a>
+      <a href="#metrics"><span class="sidebar-nav-num">10</span> Success Metrics</a>
+      <a href="#questions"><span class="sidebar-nav-num">11</span> Open Questions</a>
+    </nav>
+    <div class="sidebar-footer">
+      Internal strategy document.<br/>
+      Not for external distribution.
+    </div>
+  </aside>
+
+  <main>
+
+    <!-- Hero / Overview -->
+    <section id="overview">
+      <div class="hero">
+        <div class="hero-eyebrow">Internal · Engagement Strategy</div>
+        <h1>How we'll engage with Forum Health — without becoming their web agency.</h1>
+        <p>A time-boxed Healthcare Marketing Infrastructure Stabilization engagement, followed by an optional lightweight gatekeeper retainer. Every deliverable is either configuration/governance work that lives in Forum Health's environment, or reusable IP we apply to future healthcare customers. No bespoke software is written for Forum Health.</p>
+      </div>
+
+      <p class="lead">Forum Health, a healthcare provider with fragmented marketing properties across multiple CMS platforms and hosting environments, has approached us for help consolidating their infrastructure, fixing their security and compliance posture, and exiting their incumbent vendor (Steer Health). We are a health technology company, not a web agency — and this strategy is built so we can play a pivotal role with Forum Health without drifting into bespoke software work for a single partner.</p>
+    </section>
+
+    <!-- Situation -->
+    <section id="situation">
+      <div class="section-eyebrow">02 · Situation</div>
+      <h2>What we're walking into</h2>
+      <p>Five problem clusters. Two of them are framed in Forum Health's own materials as routine cleanup; both are materially more serious than that.</p>
+
+      <div class="situation-grid">
+        <div class="sit-card">
+          <div class="sit-icon">IF</div>
+          <h3>Infrastructure fragmentation</h3>
+          <ul>
+            <li>Main site on WordPress 6.8.5 + Elementor Pro (Cloudways)</li>
+            <li>Hormones by Design on Steer's Next.js stack</li>
+            <li>Two sub-brand sites on legacy PHP/Apache/AWS</li>
+            <li>Some properties already on WP Engine</li>
+          </ul>
+        </div>
+        <div class="sit-card danger">
+          <div class="sit-icon">SEC</div>
+          <h3>Security posture is inadequate</h3>
+          <ul>
+            <li>Main site recently hacked (defaced)</li>
+            <li>Root cause: absent identity / access lifecycle</li>
+            <li>Two sub-brand sites with no SSL, no WAF</li>
+            <li>No SSO, MFA, audit logging, or RBAC</li>
+          </ul>
+        </div>
+        <div class="sit-card danger">
+          <div class="sit-icon">PII</div>
+          <h3>Active HIPAA exposure</h3>
+          <ul>
+            <li>Orphaned Meta Pixel firing on main site</li>
+            <li>Forum Health does not control the Meta Business Manager</li>
+            <li>Patient data may already be flowing to a third party</li>
+            <li>Same fact pattern as Novant / Advocate enforcement</li>
+          </ul>
+        </div>
+        <div class="sit-card warn">
+          <div class="sit-icon">AN</div>
+          <h3>Broken analytics</h3>
+          <ul>
+            <li>Conversion values inflated 21x</li>
+            <li>18+ external script domains per page</li>
+            <li>Two parallel GA4 properties + legacy UA</li>
+            <li>Microsoft Clarity + Hotjar redundantly running</li>
+          </ul>
+        </div>
+        <div class="sit-card">
+          <div class="sit-icon">GOV</div>
+          <h3>No change governance</h3>
+          <ul>
+            <li>Operations staff making unvetted production edits</li>
+            <li>Tracking breaks repeatedly</li>
+            <li>Heather has mandated a hard stop on unapproved changes</li>
+            <li>Jade & Tanya are competent but lone single points of failure</li>
+          </ul>
+        </div>
+        <div class="sit-card warn">
+          <div class="sit-icon">VND</div>
+          <h3>Vendor exit pressure</h3>
+          <ul>
+            <li>Forum Health has stated intent to exit Steer Health</li>
+            <li>Steer is embedded in marketing + clinical + ops</li>
+            <li>Hormones by Design is locked into Steer's stack</li>
+            <li>See separate Steer Exit Plan</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="understated-box">
+        <h3>What Forum Health's own materials understate</h3>
+        <p><strong>The Meta Pixel is a potential HIPAA disclosure event</strong>, not a "tag bloat" item. The 2022–2024 hospital settlements (Novant, Advocate Aurora, Sentara) are precedent. <strong>The hack was a process failure, not a credential failure</strong> — the root cause is an absent identity/access lifecycle. A WP Engine migration without solving this just relocates the vulnerability.</p>
+      </div>
+    </section>
+
+    <!-- Principles -->
+    <section id="principles">
+      <div class="section-eyebrow">03 · Strategic Principles</div>
+      <h2>Five rules that bound every decision</h2>
+      <p>If a proposed activity violates one of these, the answer is no — regardless of revenue.</p>
+
+      <div class="principles-grid">
+        <div class="principle">
+          <div class="principle-num">01</div>
+          <h3>We do not write software for Forum Health</h3>
+          <p>Configuration, integration, governance, audit, advisory — yes. Custom code — no.</p>
+        </div>
+        <div class="principle">
+          <div class="principle-num">02</div>
+          <h3>Everything reusable becomes our IP</h3>
+          <p>Security baseline, tag governance, deploy-gate runbook. First deployment for Forum Health, second deployment in days for the next customer.</p>
+        </div>
+        <div class="principle">
+          <div class="principle-num">03</div>
+          <h3>Jade and Tanya own the steady state</h3>
+          <p>Every workstream pairs us with one of them. By engagement end, they — not us — run the systems.</p>
+        </div>
+        <div class="principle">
+          <div class="principle-num">04</div>
+          <h3>Capped hours, fixed fees, exit ramps</h3>
+          <p>No T&M drift. If scope is wrong mid-engagement, we walk with a clean reputation and a paid phase delivered.</p>
+        </div>
+        <div class="principle">
+          <div class="principle-num">05</div>
+          <h3>Steer's clinical scope is out of bounds</h3>
+          <p>The Steer exit is sequenced separately. Clinical extraction is advised, never implemented.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Alternatives -->
+    <section id="alternatives">
+      <div class="section-eyebrow">04 · Alternatives Considered</div>
+      <h2>Four engagement shapes — and why we picked one</h2>
+      <p>Each evaluated against two goals: be pivotal to Forum Health, do not stretch drkai thin. Click any option to see the analysis.</p>
+
+      <div class="alt-tabs" role="tablist">
+        <button class="alt-tab active recommended" data-alt="A">A. Compliance & Infrastructure Authority <span class="badge">Recommended</span></button>
+        <button class="alt-tab" data-alt="B">B. Stabilization Sprint Only <span class="badge">Tactical</span></button>
+        <button class="alt-tab not-recommended" data-alt="C">C. Full Technical Takeover <span class="badge">Not Recommended</span></button>
+        <button class="alt-tab" data-alt="D">D. Audit & Advise <span class="badge">Optionality</span></button>
+      </div>
+
+      <div class="alt-panel active" data-alt="A">
+        <div class="alt-card recommended">
+          <div class="alt-card-header">
+            <h3>Alternative A · Compliance & Infrastructure Authority</h3>
+            <span class="pill pill-accent">Recommended</span>
+          </div>
+          <p class="alt-prose">We own four things for the marketing surface, end-to-end:</p>
+          <ol class="alt-prose" style="padding-left: 22px;">
+            <li style="margin-bottom: 10px;"><strong>Hosting consolidation.</strong></li>
+            <li style="margin-bottom: 10px;"><strong>Marketing-surface security architecture</strong> — edge, identity, and application security for the WordPress properties and marketing tooling. Explicitly <em>not</em> clinical-system, endpoint, facility, or enterprise-IT security, which stay with Forum Health's IT function and EHR vendor.</li>
+            <li style="margin-bottom: 10px;"><strong>Marketing-surface patient privacy compliance</strong> — the web/tracking/lead-form layer. Explicitly <em>not</em> the EHR's clinical PHI scope, which stays with Forum Health's EHR vendor and clinical IT function.</li>
+            <li style="margin-bottom: 10px;"><strong>Marketing-surface change governance</strong> — written change classification, approval workflow, and technical enforcement (branch protection, GTM versioning, RBAC, audit logging) for the marketing properties and marketing tooling. Explicitly <em>not</em> enterprise IT change management, clinical workflow change management, or HR/financial-system change control.</li>
+          </ol>
+          <p class="alt-prose">For any eventual UX rebuild we vet, contract, and supervise an external agency partner we already work with — we do not execute the rebuild ourselves.</p>
+          <div class="alt-procons">
+            <div class="procons-block pros">
+              <h4>Pros</h4>
+              <ul>
+                <li>Plays directly to our healthcare-technology strengths</li>
+                <li>Sticky relationship — survives leadership changes</li>
+                <li>Defangs "can you build it too?" with a pre-defined answer</li>
+                <li>Productized deliverables compound across customers</li>
+              </ul>
+            </div>
+            <div class="procons-block cons">
+              <h4>Cons</h4>
+              <ul>
+                <li>Requires a vetted agency partner relationship</li>
+                <li>Requires discipline to refuse scope-creep into dev</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alt-panel" data-alt="B">
+        <div class="alt-card">
+          <div class="alt-card-header">
+            <h3>Alternative B · Stabilization Sprint Only</h3>
+            <span class="pill pill-muted">Tactical</span>
+          </div>
+          <p class="alt-prose">A fixed-scope 60–90 day engagement: migration, security lockdown, tag remediation, governance setup. Then we step back entirely.</p>
+          <div class="alt-procons">
+            <div class="procons-block pros">
+              <h4>Pros</h4>
+              <ul>
+                <li>Lowest commitment, fast credibility win</li>
+                <li>Easy to staff</li>
+              </ul>
+            </div>
+            <div class="procons-block cons">
+              <h4>Cons</h4>
+              <ul>
+                <li>No recurring revenue</li>
+                <li>Lose relationship gravity exactly when trust peaks</li>
+                <li>"Phase 2 TBD" usually means Phase 2 goes elsewhere</li>
+              </ul>
+            </div>
+          </div>
+          <p style="margin-top: 20px; color: var(--text-subtle); font-size: 13px;">Useful as the <em>first 90 days inside Alternative A</em>, not as the whole engagement.</p>
+        </div>
+      </div>
+
+      <div class="alt-panel" data-alt="C">
+        <div class="alt-card">
+          <div class="alt-card-header">
+            <h3>Alternative C · Full Technical Takeover</h3>
+            <span class="pill pill-danger">Not Recommended</span>
+          </div>
+          <p class="alt-prose">We become Forum Health's web agency, executing both the infrastructure work and the multi-year UX rebuild.</p>
+          <div class="alt-procons">
+            <div class="procons-block pros">
+              <h4>Pros</h4>
+              <ul>
+                <li>Maximum visibility</li>
+                <li>Maximum revenue</li>
+              </ul>
+            </div>
+            <div class="procons-block cons">
+              <h4>Cons</h4>
+              <ul>
+                <li>Inverts our strengths</li>
+                <li>Requires UX/visual design hires against the drkai roadmap</li>
+                <li>Competing with specialists on their home turf</li>
+                <li>Multi-year rebuilds slip; blame attaches to the lead vendor</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alt-panel" data-alt="D">
+        <div class="alt-card">
+          <div class="alt-card-header">
+            <h3>Alternative D · Audit & Advise</h3>
+            <span class="pill pill-muted">Optionality</span>
+          </div>
+          <p class="alt-prose">We deliver a paid security + compliance audit and a remediation roadmap, then walk away.</p>
+          <div class="alt-procons">
+            <div class="procons-block pros">
+              <h4>Pros</h4>
+              <ul>
+                <li>Lowest risk</li>
+                <li>Lowest demand on our time</li>
+              </ul>
+            </div>
+            <div class="procons-block cons">
+              <h4>Cons</h4>
+              <ul>
+                <li>Lowest revenue</li>
+                <li>Hands trust we built to whoever executes the roadmap</li>
+              </ul>
+            </div>
+          </div>
+          <p style="margin-top: 20px; color: var(--text-subtle); font-size: 13px;">Only viable if we're capacity-constrained and want to preserve optionality.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Engagement shape -->
+    <section id="engagement">
+      <div class="section-eyebrow">05 · Engagement Shape</div>
+      <h2>The recommended structure</h2>
+      <p>Alternative A, structured so the first 90 days look like Alternative B. We earn the right to a longer relationship by delivering a tight, bounded first phase.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Phase</th>
+              <th>Duration</th>
+              <th>What we deliver</th>
+              <th>Commercial</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>0. Pre-engagement diligence</strong></td>
+              <td>1 week</td>
+              <td>Engagement memo with scope inventory</td>
+              <td><span class="pill pill-muted">Pre-engagement</span></td>
+            </tr>
+            <tr>
+              <td><strong>1. Triage week</strong></td>
+              <td>5 business days</td>
+              <td>Pixel kill, credential rotation, interim WAF/SSL, triage memo</td>
+              <td><span class="pill pill-accent">Fixed fee</span></td>
+            </tr>
+            <tr>
+              <td><strong>2. Stabilization sprint</strong></td>
+              <td>8 weeks</td>
+              <td>WP Engine migration, security baseline, tag/analytics governance, change protocol</td>
+              <td><span class="pill pill-accent">Fixed fee, capped</span></td>
+            </tr>
+            <tr>
+              <td><strong>3. Knowledge transfer</strong></td>
+              <td>2 weeks (overlap)</td>
+              <td>Runbooks, walkthroughs, live sessions with Jade and Tanya, 30-day support window</td>
+              <td><span class="pill pill-muted">In Phase 2 fee</span></td>
+            </tr>
+            <tr>
+              <td><strong>4. Gatekeeper retainer</strong> <span class="pill pill-muted" style="margin-left:6px">Optional</span></td>
+              <td>Month-to-month</td>
+              <td>Monthly security review, quarterly compliance memo, deploy gate</td>
+              <td><span class="pill pill-accent">~10 hrs/mo</span></td>
+            </tr>
+            <tr>
+              <td><strong>5. Rebuild supervision</strong> <span class="pill pill-muted" style="margin-left:6px">When triggered</span></td>
+              <td>Per release</td>
+              <td>Agency RFP rubric, finalist interviews, production deploy gate</td>
+              <td><span class="pill pill-accent">Per release</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Phase playbook -->
+    <section id="playbook">
+      <div class="section-eyebrow">06 · Phase Playbook</div>
+      <h2>Explore each phase</h2>
+      <p>Click a phase to see what's delivered, who pairs from Forum Health, and what we explicitly do <em>not</em> do.</p>
+
+      <div class="timeline" role="tablist">
+        <button class="phase-btn active" data-phase="0">
+          <span class="phase-num">Phase 0</span>
+          <span class="phase-name">Diligence</span>
+          <span class="phase-duration">1 week</span>
+        </button>
+        <button class="phase-btn" data-phase="1">
+          <span class="phase-num">Phase 1</span>
+          <span class="phase-name">Triage</span>
+          <span class="phase-duration">1 week</span>
+        </button>
+        <button class="phase-btn" data-phase="2">
+          <span class="phase-num">Phase 2</span>
+          <span class="phase-name">Sprint</span>
+          <span class="phase-duration">8 weeks</span>
+        </button>
+        <button class="phase-btn" data-phase="3">
+          <span class="phase-num">Phase 3</span>
+          <span class="phase-name">Handoff</span>
+          <span class="phase-duration">2 weeks</span>
+        </button>
+        <button class="phase-btn" data-phase="4">
+          <span class="phase-num">Phase 4</span>
+          <span class="phase-name">Retainer</span>
+          <span class="phase-duration">Optional</span>
+        </button>
+        <button class="phase-btn" data-phase="5">
+          <span class="phase-num">Phase 5</span>
+          <span class="phase-name">Supervision</span>
+          <span class="phase-duration">Per release</span>
+        </button>
+      </div>
+
+      <div class="phase-detail" id="phase-detail"><!-- populated by JS --></div>
+    </section>
+
+    <!-- Workstreams within Phase 2 -->
+    <section id="workstreams">
+      <div class="section-eyebrow">07 · Stabilization Sprint Workstreams</div>
+      <h2>Four parallel workstreams</h2>
+      <p>Each has a named lead on our side and a designated pair on Forum Health's side who owns it after we leave.</p>
+
+      <div class="ws-tabs" role="tablist">
+        <button class="ws-tab active" data-ws="A">2A · Hosting Consolidation</button>
+        <button class="ws-tab" data-ws="B">2B · Security Baseline</button>
+        <button class="ws-tab" data-ws="C">2C · Tag &amp; Analytics Governance</button>
+        <button class="ws-tab" data-ws="D">2D · Change Governance</button>
+      </div>
+
+      <div class="ws-panel active" data-ws="A">
+        <div class="ws-meta">
+          <span class="pill pill-accent">Lead: Infrastructure Engineer</span>
+          <span class="pill pill-muted">Pair: Jade Cabral</span>
+        </div>
+        <h3>2A — Hosting consolidation onto WP Engine</h3>
+        <ul>
+          <li>BAA executed with WP Engine</li>
+          <li>Environment setup: dev / staging / production for the main site</li>
+          <li>Migrate <code>forumhealth.com</code> off Cloudways (clean — not deeply embedded in Steer's tooling)</li>
+          <li>Migrate <code>proactivwellnesscenters.com</code> and <code>pwconline.com</code> as separate installs (multisite is fragile under acquisition churn)</li>
+          <li>301 redirect map for every migrated site — fixing the prior agency's redirect failure</li>
+          <li>Domain, DNS, and email-routing audit during cutover</li>
+        </ul>
+        <div class="out-of-scope" style="background: var(--danger-soft); color: var(--danger); padding: 12px 16px; border-radius: var(--radius-sm); margin-top: 16px; border-left: 3px solid var(--danger); font-size: 13px;">
+          <strong>Out of scope:</strong> Hormones by Design (stays on Steer's Next.js until the Steer exit plan addresses it). Any Shopify/ecommerce restoration.
+        </div>
+      </div>
+
+      <div class="ws-panel" data-ws="B">
+        <div class="ws-meta">
+          <span class="pill pill-accent">Lead: Security &amp; IAM Engineer</span>
+          <span class="pill pill-muted">Pair: Jade Cabral</span>
+          <span class="pill pill-success">Productized IP</span>
+        </div>
+        <h3>2B — Healthcare Marketing Security Baseline</h3>
+        <p>Build the reusable baseline we deploy to every future healthcare customer.</p>
+        <ul>
+          <li>SSO (Google Workspace or Okta) for all WP admin access; MFA enforced</li>
+          <li>RBAC defined for marketing vs. ops vs. external vendors</li>
+          <li>Audit logging via WordPress plugin with log forwarding to a central destination</li>
+          <li>WAF rule baseline — consolidating on Cloudflare with Page Shield (see WAF decision memo)</li>
+          <li>Secrets rotation schedule</li>
+          <li>Written incident response runbook — the protocol the anime-ad hack <em>should have</em> followed</li>
+        </ul>
+      </div>
+
+      <div class="ws-panel" data-ws="C">
+        <div class="ws-meta">
+          <span class="pill pill-accent">Lead: Analytics / MarTech Engineer</span>
+          <span class="pill pill-muted">Pair: Jade Cabral</span>
+          <span class="pill pill-success">Productized IP</span>
+        </div>
+        <h3>2C — Tag, analytics, and consent governance</h3>
+        <ul>
+          <li>Full audit of the 18+ external scripts; kill list with per-tag rationale</li>
+          <li>Consolidate heat-mapping (keep Clarity, retire Hotjar)</li>
+          <li>Retire Universal Analytics and the duplicate GA4 property</li>
+          <li>Matomo coordinated with Steer explicitly — not ripped silently</li>
+          <li>Server-side GTM for conversion events — durable fix for the 21x inflation</li>
+          <li>Consent management platform (Cookiebot or OneTrust) configured for healthcare</li>
+          <li>Tag governance protocol with technical enforcement (PR-based versioned GTM workspace)</li>
+        </ul>
+      </div>
+
+      <div class="ws-panel" data-ws="D">
+        <div class="ws-meta">
+          <span class="pill pill-accent">Lead: Engagement Lead</span>
+          <span class="pill pill-muted">Pair: Heather Spangler</span>
+        </div>
+        <h3>2D — Change governance (Heather's actual request)</h3>
+        <ul>
+          <li>Branch protection on WP Engine staging → production</li>
+          <li>Written change approval protocol: routine content (Tanya can ship) vs. code/template/tag changes (review required)</li>
+          <li>Quarterly access review checklist</li>
+          <li>Weekly automated digest of changes deployed and access changes made</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Boundaries -->
+    <section id="boundaries">
+      <div class="section-eyebrow">08 · Boundaries</div>
+      <h2>What we explicitly do not do</h2>
+      <p>Codifying these is how we protect drkai. Each is a structural defense against scope drift.</p>
+
+      <div class="boundaries">
+        <div class="boundary"><div class="boundary-mark">✕</div>Build a replacement for any Steer service in-house</div>
+        <div class="boundary"><div class="boundary-mark">✕</div>Write custom WordPress plugins, themes, or applications for Forum Health</div>
+        <div class="boundary"><div class="boundary-mark">✕</div>Touch the EHR or any clinical-documentation system</div>
+        <div class="boundary"><div class="boundary-mark">✕</div>Become Forum Health's clinical IT department</div>
+        <div class="boundary"><div class="boundary-mark">✕</div>Negotiate Forum Health's contracts (counsel's job)</div>
+        <div class="boundary"><div class="boundary-mark">✕</div>Pitch drkai without written conflict disclosure and recusal</div>
+        <div class="boundary"><div class="boundary-mark">✕</div>Operate on-call; no 24/7 SLAs</div>
+        <div class="boundary"><div class="boundary-mark">✕</div>Run the multi-year UX rebuild</div>
+      </div>
+    </section>
+
+    <!-- Risks -->
+    <section id="risks">
+      <div class="section-eyebrow">09 · Risks &amp; Exit Ramps</div>
+      <h2>What could go wrong, and what we do about it</h2>
+      <p>Click any risk to see the mitigation and the defined exit ramp.</p>
+
+      <div class="risks-list" id="risks-list"><!-- populated by JS --></div>
+    </section>
+
+    <!-- Success metrics -->
+    <section id="metrics">
+      <div class="section-eyebrow">10 · Success Metrics</div>
+      <h2>How we'll know it worked</h2>
+
+      <div class="metrics">
+        <div class="metrics-block">
+          <h3>For Forum Health to point to</h3>
+          <div class="metric"><div class="metric-name">Conversion-value reporting accuracy</div><div class="metric-target">±5% of true</div></div>
+          <div class="metric"><div class="metric-name">External script domains per page</div><div class="metric-target">≤ 6, justified</div></div>
+          <div class="metric"><div class="metric-name">Unified WAF + SSL coverage</div><div class="metric-target">100%</div></div>
+          <div class="metric"><div class="metric-name">Time-to-deploy routine changes</div><div class="metric-target">Same-day</div></div>
+          <div class="metric"><div class="metric-name">Unauthorized prod deployments after Week 4</div><div class="metric-target">Zero</div></div>
+        </div>
+        <div class="metrics-block">
+          <h3>For us, internally</h3>
+          <div class="metric"><div class="metric-name">Phase delivered within hour cap</div><div class="metric-target">Yes</div></div>
+          <div class="metric"><div class="metric-name">Productized artifacts in IP repo</div><div class="metric-target">3+</div></div>
+          <div class="metric"><div class="metric-name">Jade running tag deploys by Week 9</div><div class="metric-target">Independently</div></div>
+          <div class="metric"><div class="metric-name">Heather can articulate our role in 1 sentence</div><div class="metric-target">By Week 6</div></div>
+          <div class="metric"><div class="metric-name">drkai engineering hours logged to Forum Health</div><div class="metric-target">≤ 8 total</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Open questions -->
+    <section id="questions">
+      <div class="section-eyebrow">11 · Decision Required</div>
+      <div class="question-block">
+        <h2>Open questions before we commit</h2>
+        <p>Two questions before the first call with Heather. The first shapes the immediate triage; the second sets the timing of the Steer Exit Plan relative to this engagement.</p>
+        <div class="question-list">
+          <div class="question-item">
+            <div class="question-num">1</div>
+            <div class="question-text">Is the Meta Business Manager controlling the orphaned Pixel reachable by anyone at Forum Health? If yes, we kill it at source; if no, the GTM kill needs a documented record for breach counsel.</div>
+          </div>
+          <div class="question-item">
+            <div class="question-num">2</div>
+            <div class="question-text">How locked in is Forum Health to exiting Steer, and on what timeline? Determines whether the Steer Exit Plan runs in parallel with this engagement or after it.</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 48px; font-size: 16px; color: var(--text-subtle); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;">One-paragraph version for Heather</h3>
+      <div class="heather-box">
+        We will stabilize Forum Health's marketing infrastructure in 90 days: kill the active compliance exposures in week one, consolidate hosting onto WP Engine with a healthcare-grade security baseline, fix the analytics, and put a written change-governance protocol in place that Jade and Tanya can run after we step back. We are not a web agency and will not run the multi-year UX rebuild — when that starts, we'll help you select an agency partner and we'll act as the production deploy gate so security and compliance never depend on the agency's discipline. The Steer exit runs as a separate, sequenced plan; we lead it on the marketing side and advise on the clinical side, with explicit conflict disclosure where our own product overlaps with replacement candidates.
+      </div>
+    </section>
+
+    <div class="footer">
+      <span>Internal · drkai · Forum Health engagement strategy</span>
+      <span>Companion docs: steer-exit-plan.md · staffing-plan.md</span>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  // ---------- Phase data ----------
+  const phaseData = {
+    "0": {
+      name: "Pre-engagement Diligence",
+      duration: "1 week",
+      pill: "Pre-engagement",
+      purpose: "Confirm we're not walking into something we can't deliver. Establish technical scope, access, and preconditions before committing to Phase 1.",
+      collect: [
+        "BAA status with Cloudways, WP Engine, GoHighLevel, Steer Health, EHR vendor",
+        "Read-only access: Cloudways, both GA4 properties, GTM, Sucuri, Cloudflare, GHL, Google Ads, Meta Business Manager",
+        "Org chart including Steer's points of contact",
+        "Written confirmation from Heather that Steer's clinical scope is out of bounds",
+        "Current Steer contract terms — counsel-reviewed"
+      ],
+      deliver: [
+        "One-page engagement memo: in-scope, out-of-scope, hour caps, exit ramps"
+      ]
+    },
+    "1": {
+      name: "Triage Week",
+      duration: "5 business days · ~25 hours",
+      pill: "Fixed fee, urgency-priced",
+      purpose: "Stop ongoing harm and produce a concrete trust win in five business days.",
+      day12: [
+        "<strong>Kill the orphaned Meta Pixel</strong> at the GTM level with documented rationale and timestamp",
+        "Rotate all admin credentials across Cloudways, WordPress, Sucuri, Cloudflare, GTM, GA4. MFA enforced. Inactive accounts disabled.",
+        "Inventory WAF coverage; document SSL/WAF gaps on the two unprotected sites"
+      ],
+      day34: [
+        "Issue Let's Encrypt SSL on the two unencrypted sites (interim before WP Engine consolidation)",
+        "Cloudflare in front of unprotected sites as interim WAF",
+        "Pull a snapshot of broken analytics — defensible before/after baseline"
+      ],
+      day5: [
+        "Two-page triage memo to Heather: what was wrong, what we did, what's still bleeding, what Phase 2 fixes"
+      ],
+      out: "Do NOT touch any Steer integration, modify the Hormones by Design Next.js code, change GHL automations, or rebuild any UI this week."
+    },
+    "2": {
+      name: "Stabilization Sprint",
+      duration: "8 weeks (Weeks 2–10)",
+      pill: "Fixed-fee, hour-capped",
+      purpose: "Consolidate hosting onto WP Engine. Deploy the productized Healthcare Marketing Security Baseline. Fix analytics. Install a written, technically-enforced change governance protocol.",
+      streams: [
+        "<strong>2A — Hosting consolidation</strong> onto WP Engine (main site + two legacy sub-brands as separate installs). BAA, environments, 301 redirects, DNS audit.",
+        "<strong>2B — Security baseline</strong>: SSO/MFA, RBAC, audit logging, Cloudflare-anchored WAF baseline, secrets rotation, incident response runbook. Productized IP.",
+        "<strong>2C — Tag &amp; analytics governance</strong>: kill list for the 18+ scripts, GA4 consolidation, server-side GTM, consent management platform, PR-based GTM workflow. Productized IP.",
+        "<strong>2D — Change governance</strong>: branch protection, written approval protocol, quarterly access review, automated change digest."
+      ],
+      out: "Hormones by Design stays on Steer's Next.js (Steer exit territory). No custom WP plugins. No bespoke applications written for Forum Health."
+    },
+    "3": {
+      name: "Knowledge Transfer",
+      duration: "2 weeks (Weeks 9–10, overlap)",
+      pill: "Included in Phase 2 fee",
+      purpose: "Prevent us from becoming Forum Health's on-call. By engagement end, Jade and Tanya — not us — run the systems.",
+      deliver: [
+        "Written runbooks for every system we touched",
+        "Recorded walkthroughs (Loom-style) for Jade and Tanya",
+        "Two live working sessions in which Jade — not us — performs a tag deploy and a security log review",
+        "30-day post-engagement support window, capped at 8 hours"
+      ],
+      out: "Self-audit: if Jade isn't running the steady state by end of Phase 2, the engagement is too consultant-dependent. Diagnose before pitching the retainer."
+    },
+    "4": {
+      name: "Gatekeeper Retainer",
+      duration: "Month-to-month · Optional",
+      pill: "~10 hrs/month, async",
+      purpose: "A lightweight gatekeeper retainer — not a full managed service.",
+      deliver: [
+        "Monthly security posture review (audit log scan, access review, WAF rule changes)",
+        "Quarterly compliance attestation memo for Forum Health's board / counsel",
+        "Review-and-approve gate for any incoming web agency's production deploy",
+        "Async-only by default. No on-call SLAs. Business-hours response windows only."
+      ],
+      sunset: "If utilization stays under cap for two consecutive quarters, propose dropping to quarterly. We want this relationship lean."
+    },
+    "5": {
+      name: "Rebuild Supervision",
+      duration: "Per release, when triggered",
+      pill: "Oversight fee per release",
+      purpose: "When the 'several year' UX rebuild is greenlit, we supervise — we do not build.",
+      deliver: [
+        "Technical scoring rubric for agency selection (Heather picks; we provide criteria)",
+        "Finalist agency interviews — we sit in",
+        "Production deploy gate for whichever agency wins",
+        "Their dev/staging is theirs. Production access goes through our review."
+      ]
+    }
+  };
+
+  // ---------- Render phase detail ----------
+  const phaseDetailEl = document.getElementById('phase-detail');
+  function renderPhase(id) {
+    const d = phaseData[id];
+    let html = `
+      <div class="phase-detail-header">
+        <div>
+          <h3>Phase ${id} — ${d.name}</h3>
+          <div class="meta">${d.duration}</div>
+        </div>
+        <span class="pill pill-accent">${d.pill}</span>
+      </div>
+      <div class="purpose"><strong>Purpose.</strong> ${d.purpose}</div>
+    `;
+    if (d.collect) html += `<h4>Information we collect</h4><ul>${d.collect.map(x => `<li>${x}</li>`).join('')}</ul>`;
+    if (d.deliver) html += `<h4>Deliverables</h4><ul>${d.deliver.map(x => `<li>${x}</li>`).join('')}</ul>`;
+    if (d.day12) html += `<h4>Days 1–2 · Stop the bleeding</h4><ul>${d.day12.map(x => `<li>${x}</li>`).join('')}</ul>`;
+    if (d.day34) html += `<h4>Days 3–4 · Interim protections</h4><ul>${d.day34.map(x => `<li>${x}</li>`).join('')}</ul>`;
+    if (d.day5) html += `<h4>Day 5 · Memo to Heather</h4><ul>${d.day5.map(x => `<li>${x}</li>`).join('')}</ul>`;
+    if (d.streams) html += `<h4>Parallel workstreams (see Section 07)</h4><ul>${d.streams.map(x => `<li>${x}</li>`).join('')}</ul>`;
+    if (d.sunset) html += `<h4>Sunset rule</h4><p style="font-size:14px; color: var(--text-muted)">${d.sunset}</p>`;
+    if (d.out) html += `<div class="out-of-scope"><strong>Boundary:</strong> ${d.out}</div>`;
+    phaseDetailEl.innerHTML = html;
+  }
+  renderPhase("0");
+
+  // Phase button handlers
+  document.querySelectorAll('.phase-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.phase-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderPhase(btn.dataset.phase);
+    });
+  });
+
+  // ---------- Alternative tabs ----------
+  document.querySelectorAll('.alt-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const id = tab.dataset.alt;
+      document.querySelectorAll('.alt-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.alt-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelector(`.alt-panel[data-alt="${id}"]`).classList.add('active');
+    });
+  });
+
+  // ---------- Workstream tabs ----------
+  document.querySelectorAll('.ws-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const id = tab.dataset.ws;
+      document.querySelectorAll('.ws-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.ws-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelector(`.ws-panel[data-ws="${id}"]`).classList.add('active');
+    });
+  });
+
+  // ---------- Risks ----------
+  const risks = [
+    {
+      title: "Diligence reveals PHI flows we hadn't priced",
+      mitigation: "Audit Forum Health's data-flow surface in Phase 0. Re-price or decline at end of Step 0 if scope materially differs.",
+      exit: "Walk before signing. Sales investment lost; no reputational damage."
+    },
+    {
+      title: "Triage week reveals Steer is actively interfering",
+      mitigation: "Re-scope or escalate to Heather. Coordinate Matomo retirement explicitly rather than ripping silently.",
+      exit: "Deliver triage memo, end engagement. Phase 1 already delivered standalone value."
+    },
+    {
+      title: "Heather is replaced mid-engagement",
+      mitigation: "Make Jade the secondary champion from Day 1. Address all deliverables to 'marketing leadership', not Heather personally.",
+      exit: "Continue with new sponsor, or close cleanly after the current phase."
+    },
+    {
+      title: "Forum Health requests bespoke development mid-sprint",
+      mitigation: "Refer to engagement memo's 'out of scope' clause. Offer to introduce the vetted WP agency partner.",
+      exit: "Decline scope add; continue current phase as planned."
+    },
+    {
+      title: "WP Engine migration hits unexpected complexity",
+      mitigation: "Surface plugin dependencies and Elementor customizations in Phase 0 discovery. Request inventory upfront.",
+      exit: "Re-price Phase 2 or narrow scope to main site only."
+    },
+    {
+      title: "Steer becomes uncooperative on Matomo or Hormones questions",
+      mitigation: "Defer those workstreams to the Steer Exit Plan. Do not let them block Phase 2.",
+      exit: "Sequence around the obstruction; complete what is under our control."
+    },
+    {
+      title: "Engagement becomes politically charged inside Forum Health",
+      mitigation: "Document everything in writing. Never agree to scope changes verbally. CC Heather on scope conversations.",
+      exit: "Pause and request alignment meeting before continuing."
+    },
+    {
+      title: "drkai capacity bleed (informal engineer pulls)",
+      mitigation: "Separate client-services pod with named individuals. Drkai engineers not in Forum Health channels. Engagement Lead has written authority to refuse pulls.",
+      exit: "Mandatory post-mortem if more than 8 drkai-eng hours logged against Forum Health."
+    }
+  ];
+
+  const risksList = document.getElementById('risks-list');
+  risksList.innerHTML = risks.map((r, i) => `
+    <div class="risk-item" data-idx="${i}">
+      <div class="risk-summary">
+        <div class="risk-icon">${i + 1}</div>
+        <div class="risk-title">${r.title}</div>
+        <svg class="risk-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="risk-body">
+        <div><h4>Mitigation</h4><p>${r.mitigation}</p></div>
+        <div><h4>Exit ramp</h4><p>${r.exit}</p></div>
+      </div>
+    </div>
+  `).join('');
+
+  document.querySelectorAll('.risk-summary').forEach(summary => {
+    summary.addEventListener('click', () => {
+      summary.parentElement.classList.toggle('open');
+    });
+  });
+
+  // ---------- Sidebar nav highlighting ----------
+  const navLinks = document.querySelectorAll('.sidebar-nav a');
+  const sections = Array.from(navLinks).map(a => document.querySelector(a.getAttribute('href')));
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`.sidebar-nav a[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+
+  sections.forEach(s => s && observer.observe(s));
+</script>
+</body>
+</html>
